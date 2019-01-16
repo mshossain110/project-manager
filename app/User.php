@@ -27,4 +27,13 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function roles() {
+        return $this->belongsToMany( 'App\Role', 'project_role_user', 'user_id', 'role_id' )
+            ->withPivot('project_id', 'role_id');
+    }
+
+    public function projects() {
+        return $this->belongsToMany( 'App\Project', 'project_role_user', 'user_id', 'project_id' );
+    }
 }
