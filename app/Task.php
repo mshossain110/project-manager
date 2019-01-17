@@ -86,11 +86,11 @@ class Task extends Model
     }
 
     public function activities() {
-        return $this->hasMany( 'WeDevs\PM\Activity\Models\Activity', 'resource_id' )->where( 'resource_type', 'task' )->orderBy( 'created_at', 'DESC' );
+        return $this->hasMany( 'App\Activity', 'resource_id' )->where( 'resource_type', 'task' )->orderBy( 'created_at', 'DESC' );
     }
 
     public function projects() {
-        return $this->belongsTo( 'WeDevs\PM\Project\Models\Project', 'project_id');
+        return $this->belongsTo( 'App\Project', 'project_id');
     }
 
     public function task_model( $key = '' ) {
@@ -98,12 +98,12 @@ class Task extends Model
     }
 
     public function metas() {
-        return $this->hasMany( 'WeDevs\PM\Common\Models\Meta', 'entity_id' )
+        return $this->hasMany( 'App\Meta', 'entity_id' )
             ->where( 'entity_type', 'task' );
     }
 
     public function completer() {
-        return $this->belongsTo( 'WeDevs\PM\User\Models\User', 'completed_by' );
+        return $this->belongsTo( 'App\User', 'completed_by' );
     }
 
      // Allowed status for a task

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App;
 
 use WeDevs\PM\Core\DB_Connection\Model as Eloquent;
 
