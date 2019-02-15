@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -28,7 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/dashboard';
 
     /**
      * Create a new controller instance.
@@ -40,6 +41,16 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+        /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationForm()
+    {
+        return view('auth.login');
+    }
+
     /**
      * Get a validator for an incoming registration request.
      *
@@ -49,9 +60,9 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:6', 'confirmed'],
+            'name'      => 'required|string|max:255|unique:users',
+            'email'     => 'required|string|email|max:255|unique:users',
+            'password'  => 'required|string|min:6|confirmed',
         ]);
     }
 
@@ -64,9 +75,24 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'name'      => $data['name'],
+            'email'     => $data['email'],
+            'password'  => Hash::make($data['password']),
+            'firstname' => isset($data['firstname']) ? $data['firstname']: null,
+            'lastname' => isset($data['lastname']) ? $data['lastname']: null,
         ]);
+    }
+
+    /**
+     * The user has been registered.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function registered(Request $request, $user)
+    {
+        $token = $user->createToken('Laravel Personal Access Client')->accessToken;
+        return ['success' => true, 'redirectTo' => $this->redirectPath(), 'token' => $token ];
     }
 }

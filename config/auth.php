@@ -42,7 +42,7 @@ return [
         ],
 
         'api' => [
-            'driver' => 'token',
+            'driver' => 'passport',
             'provider' => 'users',
         ],
     ],
@@ -98,5 +98,7 @@ return [
             'expire' => 60,
         ],
     ],
+
+    'redirectTo' => 'drive'
 
 ];

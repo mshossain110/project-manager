@@ -11,7 +11,9 @@ class RoleTransformer extends TransformerAbstract {
             'id'          => (int) $item->id,
             'title'       => $item->title,
             'description' => $item->description,
-            'created_at'  => format_date( $item->created_at ),
+            'status'      => $item->status,
+            'permission'  => $item->permission,
+            'created_at'  => $item->created_at,
             'slug'        => $item->slug
         ];
     }

@@ -1,73 +1,109 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
+    <!-- Fonts -->
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/0.5.0/modern-normalize.css">
 
-                                @if ($errors->has('email'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
+
+    <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    
+        <!-- <link rel="stylesheet" href="{{ asset('css/auth.css') }}"> -->
+    <script>
+        window.LD = @json([
+            'csftToken' => csrf_token()
+        ]);
+    </script>
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+            body {
+                font-family: 'Roboto', sans-serif;
+                font-size: 16px;
+                font-weight: 300;
+                color: #888;
+                line-height: 30px;
+                background-color: #1266F1;
+            }
+            body.image-bg {
+                background-image: url("../img/backgrounds/1.jpg");
+                background-size: cover;
+            }
+            .container {
+                width: 400px;
+                margin: 0 auto;
+            }
+            .or-wrap {
+                height: 1px;
+                margin: 40px 0px;
+                border-top: 1px solid #d0d0d0;
+                text-align: center;
+            }
+            .or-wrap span {
+                background: #FFF;
+                color: #1266F1;
+                height: 40px;
+                border-radius: 100%;
+                line-height: 40px;
+                display: inline-block;
+                top: -20px;
+                position: relative;
+                width: 40px;
+                text-align: center;
+            }
+
+        </style>
+    </head>
+
+    <body>
+
+        <div class="auth-wrap">
+            <div class="container">
+                <div class="auth-outer" id="members">
+                    <div class="form-wrap login-form-wrap">
+                    
+                        <div v-if="isLogin" class="form-inner">
+                            <Login />
                         </div>
 
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
+                        <div v-if="isRegister" class="form-inner">
+                            <Register />
                         </div>
-
-                        <div class="form-group row">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
-                                </div>
-                            </div>
+                        
+                        
+                        <div class="or-wrap"><span>OR</span></div>
+                        <div class="social-login">
+                            <Social />
                         </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-                            </div>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-@endsection
+
+        <script src="{{ asset('js/config.js') }}" defer></script>
+        <script src="{{ asset('js/auth.js') }}" defer></script>
+        
+        <!--[if lt IE 10]>
+            <script src="assets/js/placeholder.js"></script>
+        <![endif]-->
+
+    </body>
+
+</html>

@@ -5,10 +5,11 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -16,7 +17,16 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'password',
+        'firstname',
+        'lastname',
+        'status',
+        'permissions',
+        'avatar',
+        'last_loged_in',
+        'ip'
     ];
 
     /**
@@ -28,9 +38,68 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function roles() {
-        return $this->belongsToMany( 'App\Role', 'project_role_user', 'user_id', 'role_id' )
-            ->withPivot('project_id', 'role_id');
+    static $status = [
+        '0' => 'inactive',
+        '1' => 'active',
+        '2' => "pandding",
+        '3' => "baned"
+    ];
+
+    public function getStatusAttribute ( $value ) {
+        if ( array_key_exists( $value, self::$status ) ) {
+            return self::$status[$value];
+        }
+    }
+
+    public function setStatusAttribute( $value ) {
+        $value = strtolower( $value );
+        $key   = array_search( $value, self::$status );
+
+        if ( array_key_exists( $value, self::$status ) ) {
+            $this->attributes['status'] = $value;
+        } else {
+            $this->attributes['status'] = $key;
+        }
+    }
+
+    public function setPermissionsAttribute( $value ) {
+        if ( ! empty($value) ) {
+            $this->attributes['permissions'] = serialize( $value );
+        }
+    }
+
+    public function getPermissionsAttribute( $value ) {
+        $permissions = unserialize( $value );
+        
+        $roles = self::roles()->get();
+
+        foreach ( $roles as $role ) {
+            $permissions = array_merge($permissions, $role->permissions);
+        }
+
+        return empty($permissions) ? null : $permissions;
+    }
+
+    public function hasPermission( $permission ) {
+        if ( in_array($permission, $this->permissions) ){
+            return true;
+        }
+
+        return false;
+    }
+
+
+    public function roles()
+    {
+        return $this->belongsToMany('App\Role', 'project_role_user', 'user_id', 'role_id');
+    }
+
+    /**
+     * Get the comments for the blog post.
+     */
+    public function meta()
+    {
+        return $this->hasMany('App\UserMeta');
     }
 
     public function projects() {

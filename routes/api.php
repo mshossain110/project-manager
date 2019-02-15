@@ -13,6 +13,18 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group([
+    'middleware' => ['auth:api'],
+    'namespace' => 'Api\V1',
+], function () {
+    Route::delete('users/delete-multiple', 'UserController@deleteMultiple');
+    Route::get('users/search', 'UserController@search');
+    Route::resource('users', 'UserController', ['except' => ['edit']]);
+
+    Route::post('roles/{role_id}/attach_users', 'RoleController@attachUser');
+    Route::resource('roles', 'RoleController', ['except' => ['edit']]);
+
+    Route::get('permissions', 'RoleController@getAbilities');
+
 });
+
