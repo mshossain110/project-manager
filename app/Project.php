@@ -3,11 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\Common;
 use Carbon\Carbon;
 use Auth;
 
 class Project extends Model
 {
+    use Common;
     
 	const INCOMPLETE = 0;
 	const COMPLETE   = 1;
