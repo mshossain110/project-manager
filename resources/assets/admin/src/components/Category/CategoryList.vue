@@ -1,72 +1,105 @@
 <template>
-    <v-card>
-        <v-toolbar
+    <VCard>
+        <VToolbar
             color="cyan"
             dark
         >
-            <v-toolbar-side-icon />
+            <VToolbarSideIcon />
 
-            <v-toolbar-title>Categories </v-toolbar-title>
-        </v-toolbar>
+            <VToolbarTitle>Categories </VToolbarTitle>
 
-        <v-list two-line>
-            <template v-for="(item, index) in items">
-                <v-subheader
-                    v-if="item.header"
-                    :key="item.header"
-                >
-                    {{ item.header }}
-                </v-subheader>
+            <VTextField
+                v-model="search"
+                append-icon="search"
+                label="Search"
+                single-line
+                hide-details
+            />
+        </VToolbar>
 
-                <v-divider
-                    v-else-if="item.divider"
-                    :key="index"
-                    :inset="item.inset"
-                />
+        <VDataTable
+            v-model="selected"
+            :headers="headers"
+            :items="categories"
+            :search="search"
+            item-key="id"
+            select-all
+            flat
+            hide-actions
+            class="elevation-1"
+        >
+            <template
+                slot="items"
+                slot-scope="props"
+            >
+                <tr>
+                    <td>
+                        <VCheckbox
+                            v-model="props.selected"
+                            primary
+                            hide-details
+                        />
+                    </td>
 
-                <v-list-tile
-                    v-else
-                    :key="item.title"
-                    avatar
-                    @click=""
-                >
-                    <v-list-tile-avatar>
-                        <img :src="item.avatar">
-                    </v-list-tile-avatar>
+                    <td>
+                        <strong class="subheading">{{ props.item.title }}</strong>
+                        <p>{{ props.item.description }}</p>
+                    </td>
 
-                    <v-list-tile-content>
-                        <v-list-tile-title v-html="item.title" />
-                        <v-list-tile-sub-title v-html="item.subtitle" />
-                    </v-list-tile-content>
-                </v-list-tile>
+                    <td class="justify-center layout px-0">
+                        <VIcon
+                            small
+                            class="mr-2"
+                            @click="editItem(props.item)"
+                        >
+                            edit
+                        </VIcon>
+                        <VIcon
+                            small
+                            @click="deleteItem(props.item)"
+                        >
+                            delete
+                        </VIcon>
+                    </td>
+                </tr>
             </template>
-        </v-list>
-    </v-card>
+        </VDataTable>
+    </VCard>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
+    components: {
+    },
     data () {
         return {
-            items: [
+            search: '',
+            selected: [],
+            headers: [
                 {
-                    avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-                    title: 'Brunch this weekend?',
-                    subtitle: "<span class='text--primary'>Ali Connors</span> &mdash; I'll be in your neighborhood doing errands this weekend. Do you want to hang out?"
+                    text: 'Category',
+                    value: 'category',
+                    sortable: false
                 },
-                { divider: true, inset: true },
-                {
-                    avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
-                    title: 'Summer BBQ <span class="grey--text text--lighten-1">4</span>',
-                    subtitle: "<span class='text--primary'>to Alex, Scott, Jennifer</span> &mdash; Wish I could come, but I'm out of town this weekend."
-                },
-                { divider: true, inset: true },
-                {
-                    avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
-                    title: 'Oui oui',
-                    subtitle: "<span class='text--primary'>Sandra Adams</span> &mdash; Do you have Paris recommendations? Have you ever been?"
-                }
+                { text: 'Action', align: 'left', value: 'action' }
             ]
+        }
+    },
+
+    computed: {
+        ...mapState('Category', ['categories'])
+    },
+    created () {
+
+    },
+    methods: {
+        editItem (category) {
+            Bus.$emit('editCtegory', category)
+        },
+        deleteItem (category) {
+            this.$store.dispatch('Category/deleteCategory', category.id)
         }
     }
 }

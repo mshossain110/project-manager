@@ -10,7 +10,7 @@ class CategoryTransformer extends TransformerAbstract {
 
     use ResourceEditors;
 
-    protected $defaultIncludes = [
+    protected $availableIncludes = [
         'creator', 'updater',
     ];
 
@@ -20,7 +20,7 @@ class CategoryTransformer extends TransformerAbstract {
             'title'            => $item->title,
             'description'      => $item->description,
             'categorible_type' => $item->categorible_type,
-            'created_at'       => format_date( $item->created_at ),
+            'created_at'       => $item->created_at ,
         ];
     }
 

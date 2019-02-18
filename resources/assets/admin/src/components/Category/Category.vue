@@ -1,48 +1,48 @@
 <template>
-    <v-layout
+    <VLayout
         d-block
     >
-        <v-loayout
+        <VLayout
             v-if="loading"
             column
             align-center
             justify-center
         >
-            <v-progress-circular
+            <VProgressCircular
 
                 :size="70"
                 :width="7"
                 color="purple"
                 indeterminate
             />
-        </v-loayout>
+        </VLayout>
 
-        <v-flex
+        <VFlex
             xs12
             d-flex
         >
             <div class="pageTitle">
                 <h2 class="headline">
-                    <v-toolbar-side-icon />Category
+                    <VToolbarSideIcon />Category
                 </h2>
             </div>
-        </v-flex>
-        <v-layout>
-            <v-flex
+        </VFlex>
+        <VLayout>
+            <VFlex
                 xs12
                 md6
             >
-                <category-form />
-            </v-flex>
+                <CategoryForm :category="category" />
+            </VFlex>
 
-            <v-flex
+            <VFlex
                 xs12
                 md6
             >
                 <CategoryList />
-            </v-flex>
-        </v-layout>
-    </v-layout>
+            </VFlex>
+        </VLayout>
+    </VLayout>
 </template>
 
 <script>
@@ -57,11 +57,17 @@ export default {
     },
     data () {
         return {
-            loading: false
+            loading: false,
+            category: {}
         }
     },
     computed: {
-        ...mapState('Users', ['roles'])
+
+    },
+    mounted () {
+        Bus.$on('editCtegory', (data) => {
+            this.category = data
+        })
     },
     created () {
         this.loading = true

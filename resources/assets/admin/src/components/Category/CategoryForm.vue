@@ -14,7 +14,7 @@
             solo
         />
 
-        <v-textarea
+        <VTextarea
             v-model="category.description"
             solo
             name="description"
@@ -28,9 +28,8 @@
             type="submit"
             depressed
             ripple
-        >
-            Submit
-        </VBtn>
+            v-text="ButtonText"
+        />
     </VForm>
 </template>
 
@@ -47,6 +46,10 @@ export default {
                     description: ''
                 }
             }
+        },
+        update: {
+            type: Boolean,
+            default: false
         }
     },
     $_veeValidate: {
@@ -58,7 +61,9 @@ export default {
         }
     },
     computed: {
-
+        ButtonText () {
+            return this.category.id ? 'Update Category' : 'New Category'
+        }
     },
     created () {
 
@@ -69,7 +74,8 @@ export default {
             const category = {
                 id: this.category.id,
                 title: this.category.title,
-                description: this.category.description
+                description: this.category.description,
+                categorible_type: 'project'
             }
             if (!this.category.id) {
                 this.$store.dispatch('Category/addCategory', category)
