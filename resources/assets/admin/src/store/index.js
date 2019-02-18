@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import UsersStore from '@ac/Users/store'
+import Category from '@ac/Category/store'
 
 Vue.use(Vuex)
 
@@ -60,6 +61,7 @@ export default new Vuex.Store({
         }
     },
     modules: {
-        Users: UsersStore
+        Users: UsersStore,
+        Category: Category
     }
 })

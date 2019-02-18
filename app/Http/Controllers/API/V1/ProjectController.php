@@ -31,7 +31,6 @@ class ProjectController extends ApiController {
 		$per_page = $per_page ? $per_page : $per_page_from_settings;
 		$page     = $page ? $page : 1;
  
-
 		$projects = $this->fetch_projects( $category, $status );
 
 		$projects = $projects->orderBy(  'created_at', 'DESC' );

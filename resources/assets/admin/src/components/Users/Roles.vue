@@ -2,12 +2,13 @@
     <v-layout row>
         <v-flex
             xs12
-            sm4>
+            sm4
+        >
             <v-card flat>
                 <v-toolbar
                     flat
-                    color="secondary">
-
+                    color="secondary"
+                >
                     <v-toolbar-title>Roles</v-toolbar-title>
 
                     <v-spacer />
@@ -15,7 +16,6 @@
                     <v-btn icon>
                         <v-icon>search</v-icon>
                     </v-btn>
-
                 </v-toolbar>
                 <role-form :half-form="false" />
 
@@ -23,47 +23,45 @@
                     v-for="role in roles"
                     :key="role.id"
                     two-line
-                    subheader>
-
+                    subheader
+                >
                     <role :role="role" />
-
                 </v-list>
             </v-card>
-
         </v-flex>
         <v-flex
             xs12
-            sm6>
+            sm6
+        >
             <router-view />
         </v-flex>
     </v-layout>
 </template>
 
-
 <script>
-import { mapState } from 'vuex';
-import RoleForm from './RoleForm.vue';
-import Role from './Role.vue';
+import { mapState } from 'vuex'
+import RoleForm from './RoleForm.vue'
+import Role from './Role.vue'
 
 export default {
     components: {
         RoleForm,
-        Role,
+        Role
     },
     data () {
         return {
-            status: true,
-        };
+            status: true
+        }
     },
     computed: {
-        ...mapState('Users', ['roles']),
+        ...mapState('Users', ['roles'])
     },
     created () {
-        this.$store.dispatch('Users/getRole');
+        this.$store.dispatch('Users/getRole')
     },
     methods: {
-    },
-};
+    }
+}
 </script>
 
 <style lang="css">

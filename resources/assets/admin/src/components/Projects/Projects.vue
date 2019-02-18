@@ -50,25 +50,40 @@
                         <v-icon>search</v-icon>
                     </v-btn>
 
-                    <v-btn icon>
-                        <v-icon>apps</v-icon>
-                    </v-btn>
+                    <VBtn
+                        icon
+                        @click="openform = true"
+                    >
+                        <VIcon>person_add</VIcon>
+                    </VBtn>
 
                     <v-btn icon>
                         <v-icon>more_vert</v-icon>
                     </v-btn>
                 </v-toolbar>
 
-                <v-card-text style="height: 200px;" />
+                <RouterView />
             </v-card>
         </v-flex>
+        <VDialog
+            v-model="openform"
+            max-width="500px"
+        >
+            <ProjectForm @close="openform = false" />
+        </VDialog>
     </v-layout>
 </template>
 
 <script>
+
+import ProjectForm from './ProjectFrom.vue'
 export default {
+    components: {
+        ProjectForm
+    },
     data () {
         return {
+            openform: false,
             category: '',
             items: ['Foo', 'Bar', 'Fizz', 'Buzz']
         }
