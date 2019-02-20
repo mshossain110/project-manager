@@ -5,14 +5,6 @@ namespace App\Http\Controllers\Api\V1;
 use Illuminate\Http\Request;
 use App\Category;
 use App\Transformers\CategoryTransformer;
-use League\Fractal;
-use League\Fractal\Resource\Item as Item;
-use League\Fractal\Resource\Collection as Collection;
-use League\Fractal\Pagination\IlluminatePaginatorAdapter;
-use WeDevs\PM\Category\Transformers\Category_Transformer;
-// use Illuminate\Database\Capsule\Manager as DB;
-use \WeDevs\ORM\Eloquent\Facades\DB;
-use Illuminate\Pagination\Paginator;
 
 class CategoryController extends ApiController {
 
