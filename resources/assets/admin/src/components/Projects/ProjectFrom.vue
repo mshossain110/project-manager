@@ -40,6 +40,9 @@
                                 auto-grow
                             />
                         </VFlex>
+                        <VFlex xs12>
+                            <CategorySelectForm v-model="project.category" />
+                        </VFlex>
                     </VLayout>
                 </VContainer>
 
@@ -70,10 +73,11 @@
 <script>
 // import Multiselect from 'vue-multiselect'
 import { mapState } from 'vuex'
+import CategorySelectForm from '@ac/Category/CategorySelectForm.vue'
 
 export default {
     components: {
-        // Multiselect
+        CategorySelectForm
     },
     $_veeValidate: {
         validator: 'new'
@@ -85,7 +89,7 @@ export default {
                 return {
                     title: '',
                     description: '',
-                    category: '',
+                    category: null,
                     budget: '',
                     password: '',
                     assaingee: []
