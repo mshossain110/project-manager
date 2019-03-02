@@ -43,6 +43,9 @@
                         <VFlex xs12>
                             <CategorySelectForm v-model="project.category" />
                         </VFlex>
+                        <VFlex xs12>
+                            <UserSelectForm v-model="project.assaingee" />
+                        </VFlex>
                     </VLayout>
                 </VContainer>
 
@@ -74,10 +77,11 @@
 // import Multiselect from 'vue-multiselect'
 import { mapState } from 'vuex'
 import CategorySelectForm from '@ac/Category/CategorySelectForm.vue'
+import UserSelectForm from '@ac/Users/UserSelectForm.vue'
 
 export default {
     components: {
-        CategorySelectForm
+        CategorySelectForm, UserSelectForm
     },
     $_veeValidate: {
         validator: 'new'
