@@ -41,7 +41,7 @@
                             />
                         </VFlex>
                         <VFlex xs12>
-                            <CategorySelectForm v-model="project.category" />
+                            <CategorySelectForm v-model="project.categories" />
                         </VFlex>
                         <VFlex xs12>
                             <UserSelectForm v-model="project.assaingee" />
@@ -93,10 +93,10 @@ export default {
                 return {
                     title: '',
                     description: '',
-                    category: null,
+                    categories: [],
                     budget: '',
                     password: '',
-                    assaingee: []
+                    assignees: []
                 }
             }
         }
@@ -115,11 +115,26 @@ export default {
     methods: {
         submit () {
             this.$validator.validateAll()
+
+            let assignees = []; let categories = []
+            this.project.assignees.map(u => {
+                assignees.push({
+                    user_id: u.id,
+                    role_id: 1
+                })
+            })
+
+            this.project.categories.map(c => {
+                categories.push(c.id)
+            })
+
             const project = {
                 id: this.project.id,
                 title: this.project.title,
                 description: this.project.description,
-                category: this.project.name,
+                categories: categories,
+                status: 'incomplete',
+                assignees: assignees,
                 budget: this.project.budget
             }
             if (!this.project.id) {
@@ -139,11 +154,10 @@ export default {
             this.project = {
                 title: '',
                 description: '',
-                category: '',
-                email: '',
-                permissions: [],
-                role: 0,
-                avatar: ''
+                categories: [],
+                budget: '',
+                password: '',
+                assignees: []
             }
         }
     }

@@ -12,21 +12,14 @@ class ProjectTransformer extends TransformerAbstract {
     use ResourceEditors;
 
     protected $defaultIncludes = [
-        'creator', 'updater', 'categories', 'assignees', 'meta'
+        
     ];
 
     protected $availableIncludes = [
-        'overview_graph', 'task_lists', 'tasks'
+        'overview_graph', 'task_lists', 'tasks', 'creator', 'updater', 'categories', 'assignees', 'meta'
     ];
 
     public function transform( Project $item ) {
-        $listmeta = pm_get_meta($item->id, $item->id, 'task_list', 'list-inbox');
-        if($listmeta) {
-            $listmeta = $listmeta->meta_value;
-        }else {
-            $listmeta = 0;
-        }
-
         return [
             'id'                  => (int) $item->id,
             'title'               => (string) $item->title,
@@ -34,13 +27,11 @@ class ProjectTransformer extends TransformerAbstract {
             'status'              => $item->status,
             'budget'              => $item->budget,
             'pay_rate'            => $item->pay_rate,
-            'est_completion_date' => format_date( $item->est_completion_date ),
+            'est_completion_date' => $item->est_completion_date,
             'color_code'          => $item->color_code,
             'order'               => $item->order,
             'projectable_type'    => $item->projectable_type,
-            'favourite'           => !empty($item->favourite) ? (boolean) $item->favourite->meta_value: false,
-            'created_at'          => format_date( $item->created_at ),
-            'list_inbox'          => (int) $listmeta,
+            'created_at'          =>  $item->created_at
         ];
         
     }

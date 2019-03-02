@@ -23,9 +23,10 @@ Route::group([
 
     Route::post('roles/{role_id}/attach_users', 'RoleController@attachUser');
     Route::resource('roles', 'RoleController', ['except' => ['edit']]);
-    
     Route::get('permissions', 'RoleController@getAbilities');
     
     Route::resource('category', 'CategoryController', ['except' => ['edit']]);
-});
 
+    Route::post('projects/{id}/favourite', 'ProjectController@favourite_project');
+    Route::resource('projects', 'ProjectController', ['except' => ['edit']]);
+});

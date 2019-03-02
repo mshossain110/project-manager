@@ -49,17 +49,17 @@ class Project extends Model
     }
 
     public function categories() {
-        return $this->belongsToMany( 'App\Category',  'category_project', 'project_id', 'category_id' );
+        return $this->belongsToMany( 'App\Category',  'category_projects', 'project_id', 'category_id' );
     }
 
     /**
      *  we join pm_roles table with pm_role_user 
      */
     public function assignees() {
-        $role_id = Role::where('status', 1)->get(['id'])->toArray()->unique()->pluck('id');
-        return $this->belongsToMany( 'App\User', 'project_role_user', 'project_id', 'user_id' )
-            ->whereIn( 'role_id', $role_id)
-            ->withPivot( 'project_id', 'role_id' );
+        // $role_id = Role::where('status', 1)->get(['id'])->toArray()->unique()->pluck('id');
+        return $this->belongsToMany( 'App\User', 'project_role_user', 'project_id', 'user_id' );
+            // ->whereIn( 'role_id', $role_id)
+            // ->withPivot( 'project_id', 'role_id' );
     }
 
     public function task_lists() {

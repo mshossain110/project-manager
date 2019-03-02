@@ -6,14 +6,18 @@ namespace App\Http\Controllers\Api\V1;
 use Illuminate\Http\Request;
 use App\Repositories\UserRepository;
 use App\Transformers\UserTransformer;
+use App\Transformers\ProjectTransformer;
 use App\Http\Requests\UserRequest;
+use League\Fractal\Resource\Item;
+use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use App\Project;
 use App\User;
-use App\User_Role;
+use App\ProjectRoleUser;
 use App\Category;
 use App\Meta;
 use App\Task_List;
+use Auth;
 
 class ProjectController extends ApiController {
 
@@ -39,49 +43,42 @@ class ProjectController extends ApiController {
 			$per_page = $projects->get()->count();
 		}
 		
-		
 		$projects = $projects->paginate( $per_page );
 
-		$project_collection = $projects->getCollection();
-		$resource = new Collection( $project_collection, new Project_Transformer );
-
-		$resource->setMeta( $this->projects_meta( $category ) );
-
-		$resource->setPaginator( new IlluminatePaginatorAdapter( $projects ) );
-		return $this->respondWithArray($resource);
+		$this->respondWithPaginator($projects, new ProjectTransformer);
         
     }
 
     private function projects_meta( $category ) {
-		$user_id = \Auth::id();
-		$eloquent_sql     = $this->fetch_projects_by_category( $category );
-		$total_projects   = $eloquent_sql->count();
-		$eloquent_sql     = $this->fetch_projects_by_category( $category );
-		$total_incomplete = $eloquent_sql->where( 'status', Project::INCOMPLETE )->count();
-		$eloquent_sql     = $this->fetch_projects_by_category( $category );
-		$total_complete   = $eloquent_sql->where( 'status', Project::COMPLETE )->count();
-		$eloquent_sql     = $this->fetch_projects_by_category( $category );
-		$total_pending    = $eloquent_sql->where( 'status', Project::PENDING )->count();
-		$eloquent_sql     = $this->fetch_projects_by_category( $category );
-		$total_archived   = $eloquent_sql->where( 'status', Project::ARCHIVED )->count();
-		$eloquent_sql     = $this->fetch_projects_by_category( $category );
-		$favourite 		  = $eloquent_sql->whereHas( 'meta', function ( $query ) use( $user_id ) {
-						$query->where('meta_key', '=', 'favourite_project')
-							->where('entity_id', '=', $user_id)
-							->whereNotNull( 'meta_value' );
-					} )->count();
-		$user_id          = \Auth::id();
+        $user_id = \Auth::id();
+        $eloquent_sql     = $this->fetch_projects_by_category( $category );
+        $total_projects   = $eloquent_sql->count();
+        $eloquent_sql     = $this->fetch_projects_by_category( $category );
+        $total_incomplete = $eloquent_sql->where( 'status', Project::INCOMPLETE )->count();
+        $eloquent_sql     = $this->fetch_projects_by_category( $category );
+        $total_complete   = $eloquent_sql->where( 'status', Project::COMPLETE )->count();
+        $eloquent_sql     = $this->fetch_projects_by_category( $category );
+        $total_pending    = $eloquent_sql->where( 'status', Project::PENDING )->count();
+        $eloquent_sql     = $this->fetch_projects_by_category( $category );
+        $total_archived   = $eloquent_sql->where( 'status', Project::ARCHIVED )->count();
+        $eloquent_sql     = $this->fetch_projects_by_category( $category );
+        $favourite 		  = $eloquent_sql->whereHas( 'meta', function ( $query ) use( $user_id ) {
+                        $query->where('meta_key', '=', 'favourite_project')
+                            ->where('entity_id', '=', $user_id)
+                            ->whereNotNull( 'meta_value' );
+                    } )->count();
+        $user_id          = \Auth::id();
 
-		$meta  = [
-			'total_projects'   => $total_projects,
-			'total_incomplete' => $total_incomplete,
-			'total_complete'   => $total_complete,
-			'total_pending'    => $total_pending,
-			'total_archived'   => $total_archived,
-			'total_favourite'   => $favourite,
-		];
+        $meta  = [
+            'total_projects'   => $total_projects,
+            'total_incomplete' => $total_incomplete,
+            'total_complete'   => $total_complete,
+            'total_pending'    => $total_pending,
+            'total_archived'   => $total_archived,
+            'total_favourite'   => $favourite,
+        ];
 
-		return $meta;
+        return $meta;
     }
 
     private function fetch_projects( $category, $status ) {
@@ -145,7 +142,7 @@ class ProjectController extends ApiController {
 
 		
 
-		$resource = new Item( $project, new Project_Transformer );
+		$resource = new Item( $project, new ProjectTransformer );
 		$list_view = pm_get_meta( $user_id, $id, 'list_view', 'list_view_type' );
 		$resource->setMeta([
 			'list_view_type' => $list_view ? $list_view->toArray() : null
@@ -177,7 +174,7 @@ class ProjectController extends ApiController {
 
 		$assignees = $request->get( 'assignees' );
 		$assignees[] = [
-			'user_id' => wp_get_current_user()->ID,
+			'user_id' => Auth::id(),
 			'role_id' => 1, // 1 for manager
 		];
 		//craeate list inbox when create project
@@ -186,10 +183,8 @@ class ProjectController extends ApiController {
 		if ( is_array( $assignees ) ) {
 			$this->assign_users( $project, $assignees );
 		}
+		return $this->respondWithItem($project, new ProjectTransformer);
 		
-		// Transforming database model instance
-		$resource = new Item( $project, new Project_Transformer );
-		return $this->respondWithArray( $resource );
 		
 	}
 
@@ -223,11 +218,7 @@ class ProjectController extends ApiController {
 			$project->assignees()->detach();
 			$this->assign_users( $project, $assignees );
 		}
-
-		$resource = new Item( $project, new Project_Transformer );
-		return $this->respondWithArray( $resource );
-		
-        
+        return $this->respondWithItem($project, new ProjectTransformer);
 	}
 
 	public function destroy( Request $request ) {
@@ -276,7 +267,7 @@ class ProjectController extends ApiController {
 		$assignees = is_array( $assignees ) ? $assignees : []; 
 		
 		foreach ( $assignees as $assignee ) {
-			User_Role::firstOrCreate([
+			ProjectRoleUser::firstOrCreate([
 				'user_id'    => $assignee['user_id'],
 				'role_id'    => $assignee['role_id'],
 				'project_id' => $project->id,

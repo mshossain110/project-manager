@@ -7,6 +7,7 @@
         item-value="id"
         item-text="title"
         cache-items
+        multiple
         deletable-chips
         no-filter
         chips
@@ -35,9 +36,9 @@ import { mapState } from 'vuex'
 export default {
     props: {
         value: {
-            type: [Object, null],
+            type: Array,
             default () {
-                return null
+                return []
             }
         }
     },
