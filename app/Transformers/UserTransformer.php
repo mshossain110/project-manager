@@ -23,7 +23,7 @@ class UserTransformer extends TransformerAbstract {
             'email'         => $user->email,
             'firstname'     => $user->firstname,
             'lastname'      => $user->lastname,
-            'avatar'        => $user->avatar,           
+            'avatar'        => empty($user->avatar) ? 'https://avataaars.io/?avatarStyle=Transparent': $user->avatar ,           
             'status'        => $user->status,       
             'permissions'   => $user->permissions,       
             'last_loged_in' => $user->last_loged_in,       

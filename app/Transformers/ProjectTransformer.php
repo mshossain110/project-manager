@@ -12,11 +12,11 @@ class ProjectTransformer extends TransformerAbstract {
     use ResourceEditors;
 
     protected $defaultIncludes = [
-        
+        'assignees',
     ];
 
     protected $availableIncludes = [
-        'overview_graph', 'task_lists', 'tasks', 'creator', 'updater', 'categories', 'assignees', 'meta'
+        'overview_graph', 'task_lists', 'tasks', 'creator', 'updater', 'categories', 'meta'
     ];
 
     public function transform( Project $item ) {
@@ -127,6 +127,6 @@ class ProjectTransformer extends TransformerAbstract {
     public function includeAssignees( Project $item ) {
         $assignees = $item->assignees;
 
-        return $this->collection( $assignees, new UserTransformer( $item->id ) );
+        return $this->collection( $assignees, new UserTransformer );
     }
 }

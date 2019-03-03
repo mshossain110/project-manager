@@ -24,28 +24,22 @@ class ProjectController extends ApiController {
 
 	public function index( Request $request ) { 
 		$per_page = $request->get( 'per_page' );
-		$page     = $request->get( 'page' );
 		$status   = $request->get( 'status' );
 		$category = $request->get( 'category' );
-		$project_transform = $request->get( 'project_transform' );
 
-		$per_page_from_settings = null; 
-		$per_page_from_settings = $per_page_from_settings ? $per_page_from_settings : 15;
-
-		$per_page = $per_page ? $per_page : $per_page_from_settings;
-		$page     = $page ? $page : 1;
+		$per_page = 15;
  
 		$projects = $this->fetch_projects( $category, $status );
 
 		$projects = $projects->orderBy(  'created_at', 'DESC' );
 
-		if ( -1 === intval( $per_page ) || $per_page == 'all' ) {
+		if ( -1 === intval( $per_page ) ) {
 			$per_page = $projects->get()->count();
 		}
 		
 		$projects = $projects->paginate( $per_page );
-
-		$this->respondWithPaginator($projects, new ProjectTransformer);
+		
+		return $this->respondWithPaginator($projects, new ProjectTransformer);
         
     }
 
@@ -83,34 +77,35 @@ class ProjectController extends ApiController {
 
     private function fetch_projects( $category, $status ) {
 		$projects = $this->fetch_projects_by_category( $category );
-		$user_id = \Auth::id();
+		$user_id = Auth::id();
 		
-		if ($status == 'favourite' ) {
-			$projects = $projects->whereHas( 'meta', function ( $query ) use( $user_id ) {
-				$query->where('meta_key', '=', 'favourite_project')
-					->where('entity_id', '=', $user_id)
-					->whereNotNull( 'meta_value' );
-			} );
-		}
+		// if ($status == 'favourite' ) {
+		// 	$projects = $projects->whereHas( 'meta', function ( $query ) use( $user_id ) {
+		// 		$query->where('meta_key', '=', 'favourite_project')
+		// 			->where('entity_id', '=', $user_id)
+		// 			->whereNotNull( 'meta_value' );
+		// 	} );
+		// }
 
     	if ( in_array( $status, Project::$status ) ) {
 			$status   = array_search( $status, Project::$status );
 			$projects = $projects->where( 'status', $status );
 		}
+		
 
-		$projects = $projects->leftJoin('meta', function ( $join ) use( $user_id ) {
-			$join->on('projects.id', '=', 'meta.project_id' )
-			->where('meta_key', '=', 'favourite_project')->where('entity_id', '=', $user_id);
-		})
-		->selectRaw('projects.*' )
-		->groupBy('projects.id' )
-		->orderBy('meta.meta_value', 'DESC');
+		// $projects = $projects->leftJoin('meta', function ( $join ) use( $user_id ) {
+		// 	$join->on('projects.id', '=', 'meta.project_id' )
+		// 	->where('meta_key', '=', 'favourite_project')->where('entity_id', '=', $user_id);
+		// })
+		// ->selectRaw('projects.*' )
+		// ->groupBy('projects.id' )
+		// ->orderBy('meta.meta_value', 'DESC');
 
 		return $projects;
     }
 
     private function fetch_projects_by_category( $category = null ) {
-    	$user_id = \Auth::id();
+    	$user_id = Auth::id();
 
 		if ( $category ) {
     		$category = Category::where( 'categorible_type', 'project' )
@@ -131,7 +126,6 @@ class ProjectController extends ApiController {
     		// 			$q->where('user_id', $user_id );
     		// 		});
     	// }
-    	
     	return $projects;
     }
 

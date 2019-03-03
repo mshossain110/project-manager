@@ -1,39 +1,39 @@
 <template>
-    <v-layout
+    <VLayout
         d-block
     >
-        <v-flex
+        <VFlex
             xs12
             d-flex
         >
             <div class="pageTitle">
                 <h2 class="headline">
-                    <v-toolbar-side-icon />Projects
+                    <VToolbarSideIcon />Projects
                 </h2>
             </div>
-        </v-flex>
-        <v-flex
+        </VFlex>
+        <VFlex
             xs12
             d-flex
         >
-            <v-card>
-                <v-toolbar flat>
-                    <v-toolbar-items class="hidden-sm-and-down">
-                        <v-btn flat>
+            <VCard>
+                <VToolbar flat>
+                    <VToolbarItems class="hidden-sm-and-down">
+                        <VBtn flat>
                             Active
-                        </v-btn>
-                        <v-btn flat>
+                        </VBtn>
+                        <VBtn flat>
                             Complete
-                        </v-btn>
-                        <v-btn flat>
+                        </VBtn>
+                        <VBtn flat>
                             Favourite
-                        </v-btn>
-                        <v-btn flat>
+                        </VBtn>
+                        <VBtn flat>
                             All
-                        </v-btn>
-                    </v-toolbar-items>
+                        </VBtn>
+                    </VToolbarItems>
 
-                    <v-spacer />
+                    <VSpacer />
                     <select
                         v-model="category"
                         class="category_select"
@@ -46,9 +46,9 @@
                         <option>Foo</option>
                         <option>Foo</option>
                     </select>
-                    <v-btn icon>
-                        <v-icon>search</v-icon>
-                    </v-btn>
+                    <VBtn icon>
+                        <VIcon>search</VIcon>
+                    </VBtn>
 
                     <VBtn
                         icon
@@ -57,21 +57,21 @@
                         <VIcon>person_add</VIcon>
                     </VBtn>
 
-                    <v-btn icon>
-                        <v-icon>more_vert</v-icon>
-                    </v-btn>
-                </v-toolbar>
+                    <VBtn icon>
+                        <VIcon>more_vert</VIcon>
+                    </VBtn>
+                </VToolbar>
 
                 <RouterView />
-            </v-card>
-        </v-flex>
+            </VCard>
+        </VFlex>
         <VDialog
             v-model="openform"
             max-width="500px"
         >
             <ProjectForm @close="openform = false" />
         </VDialog>
-    </v-layout>
+    </VLayout>
 </template>
 
 <script>

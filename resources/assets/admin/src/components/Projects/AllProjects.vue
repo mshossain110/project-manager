@@ -1,7 +1,7 @@
 <template>
-    <v-layout>
-        <v-fiex xs3/>
-    </v-layout>
+    <VLayout>
+        All projects
+    </VLayout>
 </template>
 
 <script>
