@@ -3,6 +3,7 @@ export default {
     state: {
         projects: [],
         pagination: {},
+        project: {},
         project_users: [],
         categories: [],
         assignees: [],
@@ -14,8 +15,11 @@ export default {
 
     },
     mutations: {
-        setPorjects (state, payload) {
+        setProjects (state, payload) {
             state.projects = _.unionBy(state.projects, payload, 'id')
+        },
+        setProject (state, payload) {
+            state.project = payload
         },
         setPagination (state, payload) {
             state.pagination = payload
@@ -33,8 +37,28 @@ export default {
             return new Promise((resolve, reject) => {
                 axios.get('/api/projects', { params })
                     .then((res) => {
-                        commit('setPorjects', res.data.data)
+                        commit('setProjects', res.data.data)
                         commit('setPagination', res.data.meta.pagination)
+                        resolve(res.data)
+                    })
+                    .catch((error) => {
+                        commit('setSnackbar',
+                            {
+                                message: error.response.data.message,
+                                status: error.response.status,
+                                color: 'error',
+                                show: true
+                            },
+                            { root: true })
+                        reject(error.response)
+                    })
+            })
+        },
+        getProject ({ commit }, params) {
+            return new Promise((resolve, reject) => {
+                axios.get(`/api/projects/${params.id}`, { params })
+                    .then((res) => {
+                        commit('setProject', res.data.data)
                         resolve(res.data)
                     })
                     .catch((error) => {

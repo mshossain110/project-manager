@@ -1,6 +1,7 @@
 <template>
     <VCard
         class="project"
+        @click="getInProject"
         @contextmenu="show"
     >
         <VCardTitle>
@@ -60,6 +61,14 @@ export default {
             this.y = e.clientY
             this.$nextTick(() => {
                 this.showMneu = true
+            })
+        },
+        getInProject () {
+            this.$router.push({
+                name: 'inProject',
+                params: {
+                    id: this.project.id
+                }
             })
         }
     }

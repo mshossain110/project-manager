@@ -6,18 +6,11 @@
             xs12
             d-flex
         >
-            <div class="pageTitle">
-                <h2 class="headline">
-                    <VToolbarSideIcon />Projects
-                </h2>
-            </div>
-        </VFlex>
-        <VFlex
-            xs12
-            d-flex
-        >
             <VCard>
-                <VToolbar flat>
+                <VToolbar
+                    dense
+                    flat
+                >
                     <VToolbarItems class="hidden-sm-and-down">
                         <VBtn flat>
                             Active

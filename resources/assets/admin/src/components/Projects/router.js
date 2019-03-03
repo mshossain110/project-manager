@@ -2,7 +2,7 @@ import Projects from './Projects.vue'
 import AllProject from './AllProjects.vue'
 import ActiveProject from './ActiveProjects.vue'
 
-const UsersRoute = [
+const ProjectRoute = [
     {
         path: 'projects',
         component: Projects,
@@ -23,4 +23,4 @@ const UsersRoute = [
     }
 ]
 
-export default UsersRoute
+export default ProjectRoute

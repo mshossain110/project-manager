@@ -136,13 +136,13 @@ class ProjectController extends ApiController {
 
 		
 
-		$resource = new Item( $project, new ProjectTransformer );
-		$list_view = pm_get_meta( $user_id, $id, 'list_view', 'list_view_type' );
-		$resource->setMeta([
-			'list_view_type' => $list_view ? $list_view->toArray() : null
-		]);
+		 return $this->respondWithItem( $project, new ProjectTransformer );
+		// $list_view = pm_get_meta( $user_id, $id, 'list_view', 'list_view_type' );
+		// $resource->setMeta([
+		// 	'list_view_type' => $list_view ? $list_view->toArray() : null
+		// ]);
 
-        return $this->respondWithArray( $resource );
+        // return $this->respondWithArray( $resource );
 	}
 
 	public function store( Request $request ) {
