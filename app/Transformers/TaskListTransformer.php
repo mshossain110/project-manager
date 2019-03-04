@@ -14,7 +14,6 @@ class TaskListTransformer extends TransformerAbstract {
     use ResourceEditors;
 
     protected $defaultIncludes = [
-        'creator', 'updater', 'milestone'
     ];
 
     protected $availableIncludes = [
@@ -24,17 +23,18 @@ class TaskListTransformer extends TransformerAbstract {
         'incomplete_tasks',
         'comments',
         'files',
+        'creator', 'updater', 'milestone'
     ];
 
     public function transform( Task_List $item ) {
         return [
             'id'          => (int) $item->id,
             'title'       => $item->title,
-            'description' => pm_filter_content_url( $item->description ),
+            'description' =>  $item->description,
             'order'       => (int) $item->order,
             'status'      => $item->status,
-            'created_at'  => format_date( $item->created_at ),
-            'meta'        => $this->meta( $item ),
+            'created_at'  => $item->created_at,
+            // 'meta'        => $this->meta( $item ),
         ];
 
         
@@ -42,8 +42,7 @@ class TaskListTransformer extends TransformerAbstract {
 
 
     public function meta( Task_List $item ) {
-        $meta = $item->metas()->get()->toArray();
-        $meta = wp_list_pluck( $meta, 'meta_value', 'meta_key' );
+        $meta = $item->metas()->get()->pluck('meta_value', 'meta_key')->toArray();
 
         return array_merge( $meta, [
             'total_tasks'            => $item->tasks()->count(),

@@ -29,4 +29,12 @@ Route::group([
 
     Route::post('projects/{id}/favourite', 'ProjectController@favourite_project');
     Route::resource('projects', 'ProjectController', ['except' => ['edit']]);
+    
+    Route::put('lists/{id}/privacy', 'TaskListController@privacy' );
+    Route::put('lists/{id}/detach-users', 'TaskListController@detach_users' );
+    Route::put('lists/{id}/attach-users', 'TaskListController@attach_users' );
+    Route::put('lists/sorting', 'TaskListController@list_sorting' );
+    Route::get('lists/search', 'TaskListController@list_search' );
+    Route::resource('lists', 'TaskListController', ['except' => ['edit']]);
+    
 });

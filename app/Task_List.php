@@ -2,10 +2,13 @@
 
 namespace App;
 
-use WeDevs\PM\Core\DB_Connection\Model;
+use Illuminate\Database\Eloquent\Model;
+use App\Traits\Common;
 
 
 class Task_List extends Model {
+    
+    use Common;
     
     protected $table = 'boards';
 

@@ -1,9 +1,9 @@
 export default {
     namespaced: true,
     state: {
-        list: [],
+        lists: [],
         listMeta: {},
-        listSingle: {},
+        list: {},
         task: {}
     },
     getters: {
@@ -14,16 +14,16 @@ export default {
     mutations: {
         setLists (state, payload) {
             payload = _.isArray(payload) ? payload : [payload]
-            state.list = _.unionBy(payload, state.list, 'id')
+            state.lists = _.unionBy(payload, state.lists, 'id')
         },
         setListSingle (state, payload) {
-            state.listSingle = payload
+            state.list = payload
         },
         setlistMeta (state, payload) {
             state.listPagination = payload
         },
         deleteList (state, id) {
-            let i = state.list.findIndex(l => l.id === id)
+            let i = state.lists.findIndex(l => l.id === id)
             state.list.splice(i, 1)
         }
     },
@@ -33,7 +33,7 @@ export default {
                 axios.get('/api/lists', { params })
                     .then((res) => {
                         commit('setLists', res.data.data)
-                        commit('setPagination', res.data.meta)
+                        commit('setlistMeta', res.data.meta)
                         resolve(res.data)
                     })
                     .catch((error) => {

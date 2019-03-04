@@ -3,7 +3,7 @@
         <VFlex
             xs12
         >
-            <VCard>
+            <VCard v-if="!isLoading">
                 <VToolbar
                     flat
                     dense
@@ -33,21 +33,18 @@
 
                 <VList>
                     <VListGroup
-                        v-for="item in items"
-                        :key="item.title"
-                        v-model="item.active"
-                        :prepend-icon="item.action"
-                        no-action
+                        v-for="list in lists"
+                        :key="list.id"
                     >
                         <template v-slot:activator>
                             <VListTile>
                                 <VListTileContent>
-                                    <VListTileTitle>{{ item.title }}</VListTileTitle>
+                                    <VListTileTitle>{{ list.title }}</VListTileTitle>
                                 </VListTileContent>
                             </VListTile>
                         </template>
 
-                        <VListTile
+                        <!-- <VListTile
                             v-for="subItem in item.items"
                             :key="subItem.title"
                         >
@@ -58,7 +55,7 @@
                             <VListTileAction>
                                 <VIcon>{{ subItem.action }}</VIcon>
                             </VListTileAction>
-                        </VListTile>
+                        </VListTile> -->
                     </VListGroup>
                 </VList>
             </VCard>
@@ -69,6 +66,7 @@
 <script>
 
 import NewListForm from './NewListForm.vue'
+import { mapState } from 'vuex'
 
 export default {
     components: {
@@ -76,61 +74,21 @@ export default {
     },
     data () {
         return {
-            items: [
-                {
-                    action: 'local_activity',
-                    title: 'Attractions',
-                    items: [
-                        { title: 'List Item' }
-                    ]
-                },
-                {
-                    action: 'restaurant',
-                    title: 'Dining',
-                    active: true,
-                    items: [
-                        { title: 'Breakfast & brunch' },
-                        { title: 'New American' },
-                        { title: 'Sushi' }
-                    ]
-                },
-                {
-                    action: 'school',
-                    title: 'Education',
-                    items: [
-                        { title: 'List Item' }
-                    ]
-                },
-                {
-                    action: 'directions_run',
-                    title: 'Family',
-                    items: [
-                        { title: 'List Item' }
-                    ]
-                },
-                {
-                    action: 'healing',
-                    title: 'Health',
-                    items: [
-                        { title: 'List Item' }
-                    ]
-                },
-                {
-                    action: 'content_cut',
-                    title: 'Office',
-                    items: [
-                        { title: 'List Item' }
-                    ]
-                },
-                {
-                    action: 'local_offer',
-                    title: 'Promotions',
-                    items: [
-                        { title: 'List Item' }
-                    ]
-                }
-            ]
+            isLoading: false
         }
+    },
+    computed: {
+        ...mapState('List', ['lists']),
+        project_id () {
+            return this.$route.params.id
+        }
+    },
+    created () {
+        this.isLoading = true
+        this.$store.dispatch('List/getLists', { project_id: this.project_id })
+            .then(() => {
+                this.isLoading = false
+            })
     }
 }
 </script>

@@ -39,6 +39,7 @@ export default {
                 id: this.list.id,
                 title: this.list.title,
                 decription: this.list.decription,
+                project_id: parseInt(this.$route.params.id),
                 private: this.list.private
             }
             if (typeof this.list.id === 'undefined') {
