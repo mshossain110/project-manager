@@ -1,5 +1,6 @@
 import InProject from './InProject.vue'
-import List from './List.vue'
+import List from './List/List.vue'
+import Empty from './List.vue'
 
 const ProjectRoute = [
     {
@@ -18,27 +19,27 @@ const ProjectRoute = [
             },
             {
                 path: 'discussaion',
-                component: List,
+                component: Empty,
                 name: 'discussion-page'
             },
             {
                 path: 'milestone',
-                component: List,
+                component: Empty,
                 name: 'milestone-page'
             },
             {
                 path: 'file',
-                component: List,
+                component: Empty,
                 name: 'file-page'
             },
             {
                 path: 'activity',
-                component: List,
+                component: Empty,
                 name: 'activity-page'
             },
             {
                 path: 'voerview',
-                component: List,
+                component: Empty,
                 name: 'overview-page'
             }
         ]

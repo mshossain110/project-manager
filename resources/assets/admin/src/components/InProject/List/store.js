@@ -1,44 +1,39 @@
 export default {
     namespaced: true,
     state: {
-        projects: [],
-        projectMeta: {},
-        project: {},
-        project_users: [],
-        categories: [],
-        assignees: [],
-        isFetchProjects: false,
-
-        projects_view: 'grid_view'
+        list: [],
+        listMeta: {},
+        listSingle: {},
+        task: {}
     },
     getters: {
         pagination (state) {
-            return state.projectMeta.pagination
+            return state.listMeta.pagination
         }
     },
     mutations: {
-        setProjects (state, payload) {
+        setLists (state, payload) {
             payload = _.isArray(payload) ? payload : [payload]
-            state.projects = _.unionBy(payload, state.projects, 'id')
+            state.list = _.unionBy(payload, state.list, 'id')
         },
-        setProject (state, payload) {
-            state.project = payload
+        setListSingle (state, payload) {
+            state.listSingle = payload
         },
-        setProjectMeta (state, payload) {
-            state.projectMeta = payload
+        setlistMeta (state, payload) {
+            state.listPagination = payload
         },
-        deletePorject (state, id) {
-            let i = state.projects.findIndex(p => p.id === id)
-            state.projects.splice(i, 1)
+        deleteList (state, id) {
+            let i = state.list.findIndex(l => l.id === id)
+            state.list.splice(i, 1)
         }
     },
     actions: {
-        getProjects ({ commit }, params) {
+        getLists ({ commit }, params) {
             return new Promise((resolve, reject) => {
-                axios.get('/api/projects', { params })
+                axios.get('/api/lists', { params })
                     .then((res) => {
-                        commit('setProjects', res.data.data)
-                        commit('setProjectMeta', res.data.meta)
+                        commit('setLists', res.data.data)
+                        commit('setPagination', res.data.meta)
                         resolve(res.data)
                     })
                     .catch((error) => {
@@ -54,11 +49,11 @@ export default {
                     })
             })
         },
-        getProject ({ commit }, params) {
+        getList ({ commit }, params) {
             return new Promise((resolve, reject) => {
-                axios.get(`/api/projects/${params.id}`, { params })
+                axios.get(`/api/lists/${params.id}`, { params })
                     .then((res) => {
-                        commit('setProject', res.data.data)
+                        commit('setListSingle', res.data.data)
                         resolve(res.data)
                     })
                     .catch((error) => {
@@ -74,11 +69,11 @@ export default {
                     })
             })
         },
-        addProject ({ commit }, params) {
+        addList ({ commit }, params) {
             return new Promise((resolve, reject) => {
-                axios.post('/api/projects', params)
+                axios.post('/api/lists', params)
                     .then((res) => {
-                        commit('setProjects', res.data.data)
+                        commit('setLists', res.data.data)
                         commit('setSnackbar',
                             {
                                 message: res.data.message,
@@ -102,11 +97,11 @@ export default {
                     })
             })
         },
-        updateProject ({ commit }, params) {
+        updateList ({ commit }, params) {
             return new Promise((resolve, reject) => {
-                axios.put(`/api/projects/${params.id}`, params)
+                axios.put(`/api/lists/${params.id}`, params)
                     .then((res) => {
-                        commit('setProjects', res.data.data)
+                        commit('setLists', res.data.data)
                         commit('setSnackbar',
                             {
                                 message: res.data.message,
@@ -130,11 +125,11 @@ export default {
                     })
             })
         },
-        deleteProject ({ commit }, params) {
+        deleteList ({ commit }, params) {
             return new Promise((resolve, reject) => {
-                axios.delete(`/api/projects/${params.id}`, params)
+                axios.delete(`/api/lists/${params.id}`, params)
                     .then((res) => {
-                        commit('deletePorject', params.id)
+                        commit('deleteList', params.id)
                         commit('setSnackbar',
                             {
                                 message: res.data.message,
