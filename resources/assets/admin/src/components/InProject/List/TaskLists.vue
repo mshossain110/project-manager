@@ -31,33 +31,18 @@
                 </VToolbar>
                 <NewListForm :list="{}" />
 
-                <VList>
-                    <VListGroup
-                        v-for="list in lists"
-                        :key="list.id"
-                    >
-                        <template v-slot:activator>
-                            <VListTile>
-                                <VListTileContent>
-                                    <VListTileTitle>{{ list.title }}</VListTileTitle>
-                                </VListTileContent>
-                            </VListTile>
-                        </template>
-
-                        <!-- <VListTile
-                            v-for="subItem in item.items"
-                            :key="subItem.title"
+                <div class="list-container">
+                    <ul>
+                        <li
+                            v-for="list in lists"
+                            :key="list.id"
                         >
-                            <VListTileContent>
-                                <VListTileTitle>{{ subItem.title }}</VListTileTitle>
-                            </VListTileContent>
-
-                            <VListTileAction>
-                                <VIcon>{{ subItem.action }}</VIcon>
-                            </VListTileAction>
-                        </VListTile> -->
-                    </VListGroup>
-                </VList>
+                            <TaskList
+                                :list="list"
+                            />
+                        </li>
+                    </ul>
+                </div>
             </VCard>
         </VFlex>
     </VLayout>
@@ -66,11 +51,12 @@
 <script>
 
 import NewListForm from './NewListForm.vue'
+import TaskList from './TaskList.vue'
 import { mapState } from 'vuex'
 
 export default {
     components: {
-        NewListForm
+        NewListForm, TaskList
     },
     data () {
         return {
@@ -92,3 +78,16 @@ export default {
     }
 }
 </script>
+
+<style lang="stylus">
+.list-container
+    display: block
+    ul
+        padding:0
+        margin:0
+        list-style:none
+        li
+            list-style: none
+            padding: 0
+
+</style>

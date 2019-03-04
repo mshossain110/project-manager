@@ -83,7 +83,7 @@ module.exports = {
             },
 
             {
-                test: /\.(styl|css)$/,
+                test: /\.(styl(us)?|css)$/,
                 use: [
                     isDev ? 'vue-style-loader' : MiniCssExtractPlugin.loader,
                     {

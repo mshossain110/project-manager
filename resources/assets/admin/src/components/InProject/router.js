@@ -1,5 +1,5 @@
 import InProject from './InProject.vue'
-import List from './List/List.vue'
+import TaskLists from './List/TaskLists.vue'
 import Empty from './List.vue'
 
 const ProjectRoute = [
@@ -14,7 +14,7 @@ const ProjectRoute = [
             },
             {
                 path: 'list',
-                component: List,
+                component: TaskLists,
                 name: 'list-page'
             },
             {
