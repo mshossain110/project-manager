@@ -26,6 +26,10 @@ export default {
         task: {
             type: Object,
             required: true
+        },
+        list: {
+            type: Object,
+            required: true
         }
     },
     data () {
@@ -40,6 +44,7 @@ export default {
                 title: this.task.title,
                 decription: this.task.decription,
                 project_id: parseInt(this.$route.params.id),
+                list_id: this.list.id,
                 private: this.task.private
             }
             if (typeof this.task.id === 'undefined') {

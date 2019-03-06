@@ -81,7 +81,7 @@ class TaskController extends ApiController {
         
         if ( $task && $board ) {
             $latest_order = Boardable::latest_order( $board->id, $board->type, 'task' );
-            $boardable    = Boardable::create([
+            $Boardable    = Boardable::create([
                 'board_id'       => $board->id,
                 'board_type'     => $board->type,
                 'boardable_id'   => $task->id,
@@ -194,7 +194,7 @@ class TaskController extends ApiController {
         
         
         // Delete relations assoicated with the task
-        $task->boardables()->delete();
+        $task->Boardables()->delete();
         $task->files()->delete();
         $comments = $task->comments;
         
@@ -220,7 +220,7 @@ class TaskController extends ApiController {
         $board = Board::find( $board_id );
 
         $latest_order = Boardable::latest_order( $board->id, $board->type, 'task' );
-        $boardable    = Boardable::firstOrCreate([
+        $Boardable    = Boardable::firstOrCreate([
             'board_id'       => $board->id,
             'board_type'     => $board->type,
             'boardable_id'   => $task->id,
@@ -239,13 +239,13 @@ class TaskController extends ApiController {
         $task  = Task::find( $id );
         $board = Board::find( $board_id );
 
-        $boardable = Boardable::where( 'board_id', $board->id )
+        $Boardable = Boardable::where( 'board_id', $board->id )
             ->where( 'board_type', $board->type )
             ->where( 'boardable_id', $task->id )
             ->where( 'boardable_type', 'task' )
             ->first();
 
-        $boardable->delete();
+        $Boardable->delete();
     }
 
     public function attach_users( Request $request, $id ) {
@@ -291,15 +291,15 @@ class TaskController extends ApiController {
 
         if ( is_array( $task_orders ) ) {
             foreach ( $task_orders as $task_order ) {
-                $boardable = Boardable::where( 'board_id', $board_id )
+                $Boardable = Boardable::where( 'board_id', $board_id )
                     ->where( 'board_type', $board_type )
                     ->where( 'boardable_id', $task_order['id'] )
                     ->where( 'boardable_type', 'task' )
                     ->first();
 
-                if ( $boardable ) {
-                    $boardable->order = (int) $task_order['order'];
-                    $boardable->save();
+                if ( $Boardable ) {
+                    $Boardable->order = (int) $task_order['order'];
+                    $Boardable->save();
                 }
             }
         }
@@ -323,13 +323,13 @@ class TaskController extends ApiController {
         if ( isset( $receive ) && $receive == 1 ) {
             $task = pm_get_task( $task_id );
             $sender_list_id = $task ? $task['data']['task_list']['data']['id'] : false;
-            $boardable = Boardable::where( 'board_type', 'task_list' )
+            $Boardable = Boardable::where( 'board_type', 'task_list' )
                 ->where( 'boardable_id', $task_id )
                 ->first();
             
-            if ( $boardable ) {
-                $boardable->board_id = $list_id;
-                $boardable->update();
+            if ( $Boardable ) {
+                $Boardable->board_id = $list_id;
+                $Boardable->update();
             } 
 
             $task = pm_get_task( $task_id );
@@ -339,15 +339,15 @@ class TaskController extends ApiController {
             $index   = empty( $order['index'] ) ? 0 : intval( $order['index'] );
             $task_id = empty( $order['id'] ) ? '' : intval( $order['id'] );
 
-            $boardable = Boardable::where( 'board_id', $list_id )
+            $Boardable = Boardable::where( 'board_id', $list_id )
                     ->where( 'board_type', 'task_list' )
                     ->where( 'boardable_id', $task_id )
                     ->where( 'boardable_type', 'task' )
                     ->first();
 
-            if ( $boardable ) {
-                $boardable->order = $index;
-                $boardable->save();
+            if ( $Boardable ) {
+                $Boardable->order = $index;
+                $Boardable->save();
             }
         }
     }

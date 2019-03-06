@@ -20,7 +20,7 @@ class TaskTransformer extends TransformerAbstract {
      * @var array
      */
     protected $defaultIncludes = [
-        'creator', 'updater', 'task_list', 'assignees'
+        
     ];
 
     /**
@@ -29,7 +29,7 @@ class TaskTransformer extends TransformerAbstract {
      * @var array
      */
     protected $availableIncludes = [
-        'boards', 'comments', 'files', 'completer', 'activities'
+        'boards', 'comments', 'files', 'completer', 'activities', 'creator', 'updater', 'task_list', 'assignees'
     ];
 
     /**
@@ -39,42 +39,28 @@ class TaskTransformer extends TransformerAbstract {
      */
     public function transform( Task $item ) {
         
-        if ( $item->pivot ) {
-            $order = $item->pivot->order;
-        } else {
-            $orderObj =  Boardable::where(['boardable_id' => $item->id, 'boardable_type' => 'task'])->first();
-            if ( $orderObj ) {
-                $order = $orderObj->order;
-            } else {
-                $order = 0;
-            }
-        }
-        return apply_filters( 
-            'pm_task_transform', 
-            [
+        return [
                 'id'          => (int) $item->id,
                 'title'       => $item->title,
                 'description' => $item->description, //[ 'html' => pm_get_content( $item->description ), 'content' => $item->description ],
                 'estimation'  => $item->estimation,
-                'start_at'    => format_date( $item->start_at ),
-                'due_date'    => format_date( $item->due_date ),
+                'start_at'    =>  $item->start_at,
+                'due_date'    => $item->due_date ,
                 'complexity'  => $item->complexity,
                 'priority'    => $item->priority,
-                'order'       => (int) $order,
+                // 'order'       => (int) $order,
                 'payable'     => $item->payable,
                 'recurrent'   => $item->recurrent,
                 'parent_id'   => $item->parent_id,     
                 'status'      => $item->status,
                 'project_id'  => $item->project_id,
                 'category_id' => $item->category_id,
-                'created_at'  => format_date( $item->created_at ),
-                'completed_at' => format_date( $item->completed_at ),
-                'updated_at'  => format_date( $item->updated_at ),
+                'created_at'  => $item->created_at,
+                'completed_at' => $item->completed_at,
+                'updated_at'  => $item->updated_at,
                 'task_list_id' => $item->task_list,
-                'meta'        => $this->meta( $item ),
-            ], 
-            $item
-        );
+                //'meta'        => $this->meta( $item ),
+        ];
     }
 
 

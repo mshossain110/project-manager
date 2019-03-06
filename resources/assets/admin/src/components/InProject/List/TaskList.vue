@@ -18,9 +18,19 @@
         </div>
 
         <div class="task-container">
+            <ul>
+                <li
+                    v-for="task in list.tasks.data"
+                    :key="task.id"
+                >
+                    <Task :task="task" />
+                </li>
+            </ul>
+
             <Transition name="fade-transition">
                 <NewTaskForm
                     v-if="taskForm"
+                    :list="list"
                     :task="{}"
                 />
             </Transition>
@@ -30,9 +40,10 @@
 
 <script>
 import NewTaskForm from './NewTaskForm.vue'
+import Task from './Task.vue'
 export default {
     components: {
-        NewTaskForm
+        NewTaskForm, Task
     },
     props: {
         list: {
@@ -53,12 +64,17 @@ export default {
     justify-content: space-between
     align-items: center
     padding: 8px 20px
+    border-top: 1px solid #FFF
+    border-bottom: 1px solid #ddd
     &:hover
         background: #fcfcfc
         border-top: 1px solid #ddd
         border-bottom: 1px solid #ddd
     .v-btn
         margin: 0
-        padding 0
+        padding: 0
+    .list-title
+        font-size 18px
+        font-weight 800
 
 </style>

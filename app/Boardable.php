@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Boardables extends Model
+class Boardable extends Model
 {
     protected $fillable = [
         'board_id',
