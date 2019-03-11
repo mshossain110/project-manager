@@ -26,6 +26,7 @@ class CreateTasksTable extends Migration
             $table->boolean( 'payable' )->default( 0 )->comment( '0: Not payable; 1: Payable');
             $table->boolean( 'recurrent' )->default( 0 )->comment( '0: Not recurrent task; 1: Recurrent task');
             $table->tinyInteger( 'status' )->default( 0 )->comment( '0: Incomplete; 1: Complete; 2: Pending');
+            $table->tinyInteger( 'private', )->default( 0 )->comment( '0: public; 1: private;');
 
             $table->unsignedInteger( 'project_id' );
             $table->unsignedInteger( 'parent_id' )->default( 0 );

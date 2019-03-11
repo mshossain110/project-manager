@@ -22,6 +22,7 @@ class Task extends Model
         'payable',
         'recurrent',
         'status',
+        'private',
         'project_id',
         'completed_by',
         'completed_at',
@@ -181,11 +182,11 @@ class Task extends Model
     }
 
     public function setStartAtAttribute( $date ) {
-        $this->attributes['start_at'] = make_carbon_date( $date );
+        $this->attributes['start_at'] = Carbon::parse( $date );
     }
 
     public function setDueDateAttribute( $date ) {
-        $this->attributes['due_date'] = make_carbon_date( $date );
+        $this->attributes['due_date'] = Carbon::parse( $date );
     }
 
     public function getRecurrentAttribute( $value ) {

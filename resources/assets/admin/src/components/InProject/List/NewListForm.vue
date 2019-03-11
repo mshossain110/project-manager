@@ -1,6 +1,5 @@
 <template>
     <VForm @submit.prevent="submit" class="list-form">
-        {{list.private}}
         <div class="input-ourter">
             <input type="text" v-model="list.title" placeholder="New Task List">
             <div class="icon-btns">
@@ -34,7 +33,7 @@ export default {
     data() {
         return {
             showDescription: false,
-            lock: false,
+            lock: this.list.private,
         };
     },
     computed: {
@@ -83,7 +82,7 @@ export default {
                 outline: none
         .icon-btns
             position: absolute;
-            right: 0;
+            right: 20px;
             top: 6px;
             .v-btn
                 padding: 0px;
