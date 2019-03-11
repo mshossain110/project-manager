@@ -17,6 +17,7 @@ class Task_List extends Model {
         'description',
         'order',
         'status',
+        'private',
         'project_id',
         'created_by',
         'updated_by',

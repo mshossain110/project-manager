@@ -20,7 +20,8 @@ class CreateBoardsTable extends Migration
             $table->text( 'description' )->nullable();
             $table->unsignedInteger( 'order' )->nullable();
             $table->string( 'type' )->nullable();
-
+            $table->tinyInteger( 'private' )->default( 0 );
+            $table->tinyInteger( 'status' )->default( 0 );
             $table->unsignedInteger( 'project_id' );
             $table->unsignedInteger( 'created_by' )->nullable();
             $table->unsignedInteger( 'updated_by' )->nullable();

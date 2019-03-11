@@ -17,6 +17,7 @@
                     <VBtn
                         small
                         color="success"
+                        @click="createList = !createList"
                     >
                         Craete List
                     </VBtn>
@@ -29,7 +30,9 @@
                         Filter
                     </VBtn>
                 </VToolbar>
-                <NewListForm :list="{}" />
+                <transition name="slide-y-transition">
+                    <NewListForm v-if="createList" :list="{}" />
+                </transition>
 
                 <div class="list-container">
                     <ul>
@@ -60,7 +63,8 @@ export default {
     },
     data () {
         return {
-            isLoading: false
+            isLoading: false,
+            createList: false,
         }
     },
     computed: {

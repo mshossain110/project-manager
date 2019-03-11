@@ -21,7 +21,7 @@ class TaskListController extends ApiController{
         $status     = $request->get( 'status' );
         $per_page   = 15;
         
-        $status = isset( $status ) ? intval( $status ) : 1;
+        $status = isset( $status ) ? intval( $status ) : 0;
         
 
 
@@ -50,6 +50,7 @@ class TaskListController extends ApiController{
             'title',
             'description',
             'order',
+            'private',
             'status',
             'project_id'
         ]);
