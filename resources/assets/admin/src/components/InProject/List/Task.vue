@@ -2,7 +2,7 @@
     <div class="task">
         <div class="task-status">
             <VCheckbox
-                :value="isComplete"
+                v-model="taskstatus"
                 @change="changeTaskStatus()"
             />
         </div>
@@ -11,7 +11,8 @@
         </div>
         <div class="action">
             <div class="task-date">
-                <span v-if="task.start_at">{{ momentFormat(task.start_at.date) }}</span>
+                <span v-if="task.start_at">{{ momentFormat(task.start_at.date) }} </span>
+                <span v-if="task.start_at && task.due_date">-</span>
                 <span v-if="task.due_date">{{ momentFormat(task.due_date.date) }}</span>
             </div>
             <Assignee :assignees="task.assignees.data" />
@@ -48,13 +49,11 @@ export default {
     },
     data () {
         return {
-            taskstatus: false
+            taskstatus: this.task.status === 'complete'
         }
     },
     computed: {
-        isComplete () {
-            return this.task.status === 'complete'
-        }
+
     },
     methods: {
         momentFormat (date) {

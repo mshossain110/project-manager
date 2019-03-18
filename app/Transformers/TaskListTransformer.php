@@ -34,7 +34,7 @@ class TaskListTransformer extends TransformerAbstract {
             'order'       => (int) $item->order,
             'status'      => $item->status,
             'created_at'  => $item->created_at,
-            // 'meta'        => $this->meta( $item ),
+            'meta'        => $this->meta( $item ),
         ];
 
         
@@ -42,15 +42,15 @@ class TaskListTransformer extends TransformerAbstract {
 
 
     public function meta( Task_List $item ) {
-        $meta = $item->metas()->get()->pluck('meta_value', 'meta_key')->toArray();
+        $meta = [];// $item->metas()->get()->pluck('meta_value', 'meta_key')->toArray();
 
         return array_merge( $meta, [
             'total_tasks'            => $item->tasks()->count(),
             'total_complete_tasks'   => $item->tasks()->where( 'status', Task::COMPLETE )->count(),
             'total_incomplete_tasks' => $item->tasks()->where( 'status', Task::INCOMPLETE )->count(),
-            'total_comments'         => $item->comments()->count(),
-            'totla_files'            => $item->files()->count(),
-            'total_assignees'        => $item->assignees()->count(),
+            // 'total_comments'         => $item->comments()->count(),
+            // 'totla_files'            => $item->files()->count(),
+            // 'total_assignees'        => $item->assignees()->count(),
         ] );
     }
 

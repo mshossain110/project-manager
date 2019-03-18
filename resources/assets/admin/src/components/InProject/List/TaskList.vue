@@ -4,6 +4,34 @@
             <div class="list-title">
                 {{ list.title }}
             </div>
+
+            <div class="task-show">
+                <VBtn
+                    color="green darken-1"
+                    dark
+                    small
+                    :flat="!incompleteTasks"
+                    @click="incompleteTasks = true"
+                >
+                    Incomplete
+                </VBtn>
+                <VBtn
+                    color="red darken-1"
+                    dark
+                    small
+                    :flat="incompleteTasks"
+                    @click="incompleteTasks = false"
+                >
+                    complete
+                </VBtn>
+                <VProgressCircular
+                    :value="progress"
+                    size="24"
+                    width="2"
+                    color="#4caf50"
+                />
+            </div>
+
             <div class="list-action">
                 <VBtn
                     flat
@@ -18,9 +46,17 @@
         </div>
 
         <div class="task-container">
-            <ul>
+            <ul v-if="incompleteTasks">
                 <li
                     v-for="task in list.incomplete_tasks.data"
+                    :key="task.id"
+                >
+                    <Task :task="task" />
+                </li>
+            </ul>
+            <ul v-else>
+                <li
+                    v-for="task in list.complete_tasks.data"
                     :key="task.id"
                 >
                     <Task :task="task" />
@@ -53,7 +89,14 @@ export default {
     },
     data () {
         return {
-            taskForm: false
+            taskForm: false,
+            incompleteTasks: true
+        }
+    },
+    computed: {
+        progress () {
+            let meta = this.list.meta
+            return (meta.total_complete_tasks / meta.total_tasks) * 100
         }
     }
 }
@@ -66,6 +109,8 @@ export default {
     padding: 8px 20px
     border-top: 1px solid #FFF
     border-bottom: 1px solid #ddd
+    &> div
+        margin-right: 10px;
     &:hover
         background: #fcfcfc
         border-top: 1px solid #ddd
@@ -76,5 +121,12 @@ export default {
     .list-title
         font-size 18px
         font-weight 800
-
+        flex-grow 1
+    .task-show
+        flex-grow 1
+        .v-btn--small
+            font-size: 10px;
+            height: 22px;
+        .v-progress-circular
+            margin-left 20px
 </style>
