@@ -121,7 +121,7 @@ class TaskController extends ApiController {
         $user = Auth::id();
         $data = [
             'task_id'     => $task->id,
-            'assigned_to' => $user->ID,
+            'assigned_to' => $user,
             'project_id'  => $task->project_id,
         ];
 

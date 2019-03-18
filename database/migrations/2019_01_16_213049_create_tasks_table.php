@@ -31,6 +31,9 @@ class CreateTasksTable extends Migration
             $table->unsignedInteger( 'project_id' );
             $table->unsignedInteger( 'parent_id' )->default( 0 );
 
+            $table->unsignedInteger( 'completed_by' )->nullable();
+            $table->timestamp( 'completed_at' )->nullable();
+            
             $table->unsignedInteger( 'created_by' )->nullable();
             $table->unsignedInteger( 'updated_by' )->nullable();
 

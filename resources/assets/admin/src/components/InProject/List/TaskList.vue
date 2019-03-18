@@ -20,7 +20,7 @@
         <div class="task-container">
             <ul>
                 <li
-                    v-for="task in list.tasks.data"
+                    v-for="task in list.incomplete_tasks.data"
                     :key="task.id"
                 >
                     <Task :task="task" />

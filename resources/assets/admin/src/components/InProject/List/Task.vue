@@ -2,7 +2,8 @@
     <div class="task">
         <div class="task-status">
             <VCheckbox
-                v-model="taskstatus"
+                :value="isComplete"
+                @change="changeTaskStatus()"
             />
         </div>
         <div class="task-title">
@@ -60,6 +61,13 @@ export default {
             if (date) {
                 return moment(date).format('DD MMM')
             }
+        },
+        changeTaskStatus () {
+            console.log(this.task.status)
+            this.$store.dispatch('List/changeTaskStatus', {
+                id: this.task.id,
+                status: this.task.status === 'incomplete' ? 1 : 0
+            })
         }
     }
 }

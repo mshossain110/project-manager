@@ -38,6 +38,21 @@ export default {
         },
         deleteTask (state, payload) {
 
+        },
+        changeTaskStatus (state, payload) {
+            let l = state.lists.findIndex(a => a.id === payload.task_list_id)
+            if (state.lists[l].incomplete_tasks && state.lists[l].incomplete_tasks.data.length) {
+                let t = state.lists[l].incomplete_tasks.data.findIndex(a => a.id === payload.id)
+                state.lists[l].incomplete_tasks.data.splice(t, 1)
+            }
+
+            if (typeof state.lists[l].complete_tasks === 'undefined') {
+                state.lists[l].complete_tasks = {
+                    data: [payload]
+                }
+            } else {
+                state.lists[l].complete_tasks.data.push(payload)
+            }
         }
     },
     actions: {
@@ -267,6 +282,34 @@ export default {
                 axios.delete(`/api/tasks/${params.id}`, params)
                     .then((res) => {
                         commit('deleteTask', params.id)
+                        commit('setSnackbar',
+                            {
+                                message: res.data.message,
+                                status: res.status,
+                                color: 'success',
+                                show: true
+                            },
+                            { root: true })
+                        resolve(res.data)
+                    })
+                    .catch((error) => {
+                        commit('setSnackbar',
+                            {
+                                message: error.response.data.message,
+                                status: error.response.status,
+                                color: 'error',
+                                show: true
+                            },
+                            { root: true })
+                        reject(error.response)
+                    })
+            })
+        },
+        changeTaskStatus ({ commit }, params) {
+            return new Promise((resolve, reject) => {
+                axios.put(`/api/tasks/${params.id}/change-status`, params)
+                    .then((res) => {
+                        commit('changeTaskStatus', res.data.data)
                         commit('setSnackbar',
                             {
                                 message: res.data.message,
