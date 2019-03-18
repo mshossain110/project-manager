@@ -16,7 +16,10 @@
 
         <VCardActions>
             <VListTile class="grow">
-                <Assignee :assignees="project.assignees.data" />
+                <Assignee
+                    :assignees="project.assignees.data"
+                    size="36px"
+                />
             </VListTile>
         </VCardActions>
 
@@ -31,7 +34,7 @@
 </template>
 
 <script>
-import Assignee from './Assignee.vue'
+import Assignee from '@ac/common/Assignee.vue'
 import ProjectMenu from './ProjectMenu.vue'
 
 export default {

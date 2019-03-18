@@ -53,6 +53,7 @@ class TaskTransformer extends TransformerAbstract {
                 'recurrent'   => $item->recurrent,
                 'parent_id'   => $item->parent_id,     
                 'status'      => $item->status,
+                'private'      => $item->private,
                 'project_id'  => $item->project_id,
                 'category_id' => $item->category_id,
                 'created_at'  => $item->created_at,

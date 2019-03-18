@@ -59,7 +59,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import Assignee from '@ac/Projects/Assignee.vue'
+import Assignee from '@ac/common/Assignee.vue'
 
 export default {
     components: {
