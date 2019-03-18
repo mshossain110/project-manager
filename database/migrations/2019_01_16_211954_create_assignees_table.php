@@ -24,7 +24,7 @@ class CreateAssigneesTable extends Migration
             $table->unsignedInteger( 'updated_by' )->nullable();
 
             $table->timestamp( 'assigned_at' )->nullable();
-            $table->timestamp( 'stated_at' )->nullable();
+            $table->timestamp( 'started_at' )->nullable();
             $table->timestamp( 'completed_at' )->nullable();
             $table->unsignedInteger( 'project_id' );
 

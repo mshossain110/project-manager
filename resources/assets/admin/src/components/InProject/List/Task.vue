@@ -1,19 +1,20 @@
 <template>
     <div class="task">
-        <div class="task-title">{{task.title}}</div>
+        <div class="task-title">
+            {{ task.title }}
+        </div>
         <div class="action">
             <VBtn
-                    flat
-                    icon
-                    small
-                    color="red lighten-2"
-                >
-                    <VIcon>add</VIcon>
-                </VBtn>
+                flat
+                icon
+                small
+                color="red lighten-2"
+            >
+                <VIcon>add</VIcon>
+            </VBtn>
         </div>
     </div>
 </template>
-
 
 <script>
 export default {

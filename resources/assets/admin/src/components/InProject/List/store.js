@@ -30,8 +30,11 @@ export default {
             state.task = payload
         },
         addTask (state, payload) {
-            let i = state.lists.findIndex(l => l.id === payload.list_id)
-            // if (typeof state.lists[i].tasks)
+            let i = state.lists.findIndex(l => l.id === payload.task_list_id)
+            if (typeof state.lists[i].tasks !== 'undefined') {
+                state.lists[i].tasks.data.push(payload)
+                state.lists[i].incomplete_tasks.data.push(payload)
+            }
         },
         deleteTask (state, payload) {
 
@@ -67,6 +70,7 @@ export default {
                         resolve(res.data)
                     })
                     .catch((error) => {
+                        console.log(error)
                         commit('setSnackbar',
                             {
                                 message: error.response.data.message,

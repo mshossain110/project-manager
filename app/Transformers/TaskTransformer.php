@@ -20,7 +20,7 @@ class TaskTransformer extends TransformerAbstract {
      * @var array
      */
     protected $defaultIncludes = [
-        
+        'assignees'
     ];
 
     /**
@@ -29,7 +29,7 @@ class TaskTransformer extends TransformerAbstract {
      * @var array
      */
     protected $availableIncludes = [
-        'boards', 'comments', 'files', 'completer', 'activities', 'creator', 'updater', 'task_list', 'assignees'
+        'boards', 'comments', 'files', 'completer', 'activities', 'creator', 'updater', 'task_list', 
     ];
 
     /**

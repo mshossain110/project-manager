@@ -14,6 +14,9 @@ export default {
     getters: {
         pagination (state) {
             return state.projectMeta.pagination
+        },
+        projectUsers (state) {
+            return state.project.assignees.data
         }
     },
     mutations: {
