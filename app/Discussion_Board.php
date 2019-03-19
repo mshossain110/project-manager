@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Board extends Model
+class Discussion_Board extends Model
 {
     
     protected $table = 'boards';

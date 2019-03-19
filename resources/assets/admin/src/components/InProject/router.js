@@ -1,5 +1,6 @@
 import InProject from './InProject.vue'
 import TaskLists from './List/TaskLists.vue'
+import Discussions from './Discussion/Discussions.vue'
 import Empty from './List.vue'
 
 const ProjectRoute = [
@@ -19,7 +20,7 @@ const ProjectRoute = [
             },
             {
                 path: 'discussaion',
-                component: Empty,
+                component: Discussions,
                 name: 'discussion-page'
             },
             {

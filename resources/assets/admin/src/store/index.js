@@ -4,6 +4,7 @@ import Users from '@ac/Users/store'
 import Category from '@ac/Category/store'
 import Projects from '@ac/Projects/store'
 import List from '@ac/InProject/List/store'
+import Discussion from '@ac/InProject/Discussion/store'
 
 Vue.use(Vuex)
 
@@ -66,6 +67,7 @@ export default new Vuex.Store({
         Users,
         Category,
         Projects,
-        List
+        List,
+        Discussion
     }
 })

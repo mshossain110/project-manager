@@ -11,15 +11,9 @@
                     <VBtn
                         small
                         color="success"
+                        @click="createDiscuss = !createDiscuss"
                     >
-                        Craete Task
-                    </VBtn>
-                    <VBtn
-                        small
-                        color="success"
-                        @click="createList = !createList"
-                    >
-                        Craete List
+                        Craete New Topic
                     </VBtn>
 
                     <VSpacer />
@@ -31,21 +25,19 @@
                     </VBtn>
                 </VToolbar>
                 <Transition name="slide-y-transition">
-                    <NewListForm
-                        v-if="createList"
-                        :list="{}"
+                    <DiscussionForm
+                        v-if="createDiscuss"
+                        :discuss="{}"
                     />
                 </Transition>
 
-                <div class="list-container">
+                <div class="discussion-container">
                     <ul>
                         <li
-                            v-for="list in lists"
-                            :key="list.id"
+                            v-for="discussion in discussions"
+                            :key="discussion.id"
                         >
-                            <TaskList
-                                :list="list"
-                            />
+                            <Discussion :discussion="discussion" />
                         </li>
                     </ul>
                 </div>
@@ -55,46 +47,40 @@
 </template>
 
 <script>
-
-import NewListForm from './NewListForm.vue'
-import TaskList from './TaskList.vue'
 import { mapState } from 'vuex'
+import DiscussionForm from './DiscussionForm.vue'
+import Discussion from './Discussion.vue'
 
 export default {
     components: {
-        NewListForm, TaskList
+        DiscussionForm, Discussion
     },
     data () {
         return {
             isLoading: false,
-            createList: false
+            createDiscuss: false
         }
     },
     computed: {
-        ...mapState('List', ['lists']),
+        ...mapState('Discussion', ['discussions']),
         project_id () {
             return this.$route.params.id
         }
     },
     created () {
         this.isLoading = true
-        this.$store.dispatch('List/getLists', { project_id: this.project_id })
+        this.$store.dispatch('Discussion/getDiscussions', { project_id: this.project_id })
             .then(() => {
                 this.isLoading = false
             })
     }
 }
 </script>
-
 <style lang="stylus">
-.list-container
-    display: block
+.discussion-container
+    margin-top: 20px
     ul
-        padding:0
-        margin:0
-        list-style:none
-        li
-            list-style: none
-            padding: 0
-
+        margin: 0;
+        padding: 0;
+        list-style: none;
 </style>

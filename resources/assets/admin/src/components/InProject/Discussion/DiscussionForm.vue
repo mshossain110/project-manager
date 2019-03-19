@@ -1,26 +1,15 @@
 <template>
     <VForm
-        class="list-form"
+        class="discussion-form"
         @submit.prevent="submit"
     >
         <div class="input-ourter">
             <input
-                v-model="list.title"
+                v-model="discuss.title"
                 type="text"
-                placeholder="New Task List"
+                placeholder="New Topic Title"
             >
             <div class="icon-btns">
-                <VBtn
-                    flat
-                    small
-                    icon
-                    color="gray lighten-2"
-                    @click="showDescription = !showDescription"
-                >
-                    <VIcon small>
-                        insert_comment
-                    </VIcon>
-                </VBtn>
                 <VBtn
                     v-if="lock"
                     flat
@@ -47,28 +36,32 @@
                 </VBtn>
             </div>
         </div>
-        <Transition name="slide-y-transition">
-            <textarea
-                v-if="showDescription"
-                v-model="list.decription"
-                placeholder="Description"
-            />
-        </Transition>
+
+        <textarea
+            v-model="discuss.description"
+            placeholder="Description"
+        />
+        <VBtn
+            color="primary"
+            type="submit"
+        >
+            Submit
+        </VBtn>
     </VForm>
 </template>
 
 <script>
 export default {
     props: {
-        list: {
+        discuss: {
             type: Object,
             required: true
         }
     },
     data () {
         return {
-            showDescription: false,
-            lock: this.list.private
+
+            lock: this.discuss.private
         }
     },
     computed: {
@@ -76,20 +69,20 @@ export default {
     methods: {
         submit () {
             let data = {
-                id: this.list.id,
-                title: this.list.title,
-                decription: this.list.decription,
+                id: this.discuss.id,
+                title: this.discuss.title,
+                description: this.discuss.description,
                 project_id: parseInt(this.$route.params.id),
                 private: this.lock
             }
-            if (typeof this.list.id === 'undefined') {
-                this.$store.dispatch('List/addList', data)
+            if (typeof this.discuss.id === 'undefined') {
+                this.$store.dispatch('Discussion/addDiscussion', data)
                     .then(() => {
                         // Reset form using form class
                         Object.assign(this.$data, this.$options.data.call(this))
                     })
             } else {
-                this.$store.dispatch('List/updateList', data)
+                this.$store.dispatch('Discussion/updateDiscussion', data)
                     .then(() => {
                     // Reset form using form class
                         Object.assign(this.$data, this.$options.data.call(this))
@@ -100,7 +93,7 @@ export default {
 }
 </script>
 <style lang="stylus">
-.list-form
+.discussion-form
     .input-ourter
         position: relative
         overflow: hidden

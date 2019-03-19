@@ -49,5 +49,10 @@ Route::group([
     Route::put('tasks/{id}/privacy', 'TaskController@privacy');
     Route::put('tasks/{id}/change-status', 'TaskController@change_status');
     Route::resource('tasks', 'TaskController', ['except' => ['edit']]);
-
+   
+    Route::put('discussions/{id}/attach-users', 'TaskController@attach_users');
+    Route::put('discussions/{id}/detach-users', 'TaskController@detach_users');
+    Route::put('discussions/{id}/privacy', 'TaskController@privacy');
+    Route::resource('discussions', 'DiscussionController', ['except' => ['edit']]);
+    
 });

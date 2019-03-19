@@ -13,7 +13,7 @@ use App\File;
 
 use App\Task;
 
-class Discussion_Board_Controller extends ApiController {
+class DiscussionController extends ApiController {
 
     public function index( Request $request ) {
         $project_id = $request->get( 'project_id' );
@@ -43,15 +43,15 @@ class Discussion_Board_Controller extends ApiController {
 
         $data = $request->all( );
         // $media_data = $request->get_file_params();
-        $milestone_id = $request->get( 'milestone' );
-        $files = array_key_exists( 'files', $media_data ) ? $media_data['files'] : null;
+        // $milestone_id = $request->get( 'milestone' );
+        // $files = array_key_exists( 'files', $media_data ) ? $media_data['files'] : null;
         
-        $milestone = Milestone::find( $milestone_id );
+        // $milestone = Milestone::find( $milestone_id );
         $discussion_board = Discussion_Board::create( $data );
 
-        if ( $milestone ) {
-            $this->attach_milestone( $discussion_board, $milestone );
-        }
+        // if ( $milestone ) {
+        //     $this->attach_milestone( $discussion_board, $milestone );
+        // }
 
         // if ( $files ) {
         //     $this->attach_files( $discussion_board, $files );

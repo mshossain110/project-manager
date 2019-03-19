@@ -12,11 +12,11 @@ class DiscussionBoardTransformer extends TransformerAbstract {
     use ResourceEditors;
 
     protected $defaultIncludes = [
-        'creator', 'updater', 'users', 'milestone', 'files'
+        
     ];
 
     protected $availableIncludes = [
-        'comments'
+        'comments', 'creator', 'updater', 'users', 'milestone', 'files'
     ];
 
     public function transform( Discussion_Board $item ) {
@@ -25,22 +25,19 @@ class DiscussionBoardTransformer extends TransformerAbstract {
             'title'       => $item->title,
             'description' => $item->description,
             'order'       => $item->order,
-            'created_at'  => format_date( $item->created_at ),
-            'meta'        => $this->meta( $item ),
+            'created_at'  =>  $item->created_at ,
+            // 'meta'        => $this->meta( $item ),
         ];
     
     }
 
 
     public function meta( Discussion_Board $item ) {
-        $meta = $item->metas()->get()->toArray();
-        $meta = wp_list_pluck( $meta, 'meta_value', 'meta_key' );
-
-        return array_merge( $meta, [
+        return [
             'total_comments' => $item->comments->count(),
             'total_users'    => $item->users->count(),
             'total_files'    => $item->files->count(),
-        ] );
+        ];
     }
 
     public function includeUsers( Discussion_Board $item ) {

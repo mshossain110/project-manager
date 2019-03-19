@@ -7,7 +7,7 @@
             />
         </div>
         <div class="task-title">
-            {{ task.title }}
+            <div>{{ task.title }}</div>
         </div>
         <div class="action">
             <div class="task-date">
