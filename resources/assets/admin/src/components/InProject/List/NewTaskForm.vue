@@ -236,7 +236,7 @@ export default {
                 id: this.task.id,
                 title: this.task.title,
                 description: this.task.description,
-                project_id: parseInt(this.$route.params.id),
+                project_id: parseInt(this.$route.params.project_id),
                 list_id: this.list.id,
                 start_at: this.task.start_at,
                 due_date: this.task.due_date,

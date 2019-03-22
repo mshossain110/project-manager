@@ -5,7 +5,7 @@ import Empty from './List.vue'
 
 const ProjectRoute = [
     {
-        path: '/projects/:id',
+        path: '/projects/:project_id',
         component: InProject,
         children: [
             {

@@ -1,7 +1,7 @@
 <template>
     <VForm
         class="comment-form"
-        @submit.prevent="$emit('submit')"
+        @submit.prevent="submit"
     >
         <VContainer
             fluid
@@ -10,10 +10,14 @@
             <VTextarea
                 v-model="comment.content"
                 auto-grow
-                autofucus
+                autofocus
+                row-height="12"
+                background-color="rgba(156, 153, 153, 0.06)"
                 clearable
                 counter
                 light
+                box
+                :loading="isLoading"
                 label="Replay"
             />
             <VBtn
@@ -35,11 +39,37 @@ export default {
             default () {
                 return {}
             }
+        },
+        discuss: {
+            type: Object,
+            required: true
+        }
+    },
+    data () {
+        return {
+            isLoading: false
         }
     },
     computed: {
         hascontent () {
             return typeof this.comment.content === 'string' && this.comment.content.length > 0
+        }
+    },
+    methods: {
+        submit () {
+            if (typeof this.comment.content !== 'string' || this.comment.content === '') {
+                return
+            }
+            var params = {
+                content: this.comment.content,
+                commentable_id: this.discuss.id,
+                commentable_type: 'discussion_board'
+            }
+
+            axios.post('/api/comments', params)
+                .then(() => {
+
+                })
         }
     }
 }

@@ -19,7 +19,7 @@
 
             <CommentForm
                 :comment="newComment"
-                @submit="postComment"
+                :discuss="discussion"
             />
         </VCardText>
     </VCard>
@@ -50,9 +50,7 @@ export default {
 
     },
     methods: {
-        postComment () {
 
-        }
     }
 }
 </script>

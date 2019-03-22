@@ -72,7 +72,7 @@ export default {
                 id: this.discuss.id,
                 title: this.discuss.title,
                 description: this.discuss.description,
-                project_id: parseInt(this.$route.params.id),
+                project_id: parseInt(this.$route.params.project_id),
                 private: this.lock
             }
             if (typeof this.discuss.id === 'undefined') {

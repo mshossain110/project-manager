@@ -8,7 +8,7 @@ use App\Transformers\CommentTransformer;
 use App\Comment;
 
 
-class Comment_Controller  extends ApiController {
+class CommentController  extends ApiController {
 
 
     public function index( Request $request ) {
@@ -54,7 +54,7 @@ class Comment_Controller  extends ApiController {
     }
 
     public function store( Request $request ) {
-        $data       = $request->all(  );
+        $data       = $request->all();
         // $media_data = $request->get_file_params();
         $type       = $request->get('type');
 

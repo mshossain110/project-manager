@@ -79,7 +79,7 @@ export default {
     computed: {
         ...mapState('Discussion', ['discussions']),
         project_id () {
-            return this.$route.params.id
+            return this.$route.params.project_id
         }
     },
     created () {

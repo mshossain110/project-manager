@@ -75,12 +75,12 @@ export default {
     computed: {
         ...mapState('Projects', ['project']),
         project_id () {
-            return this.$route.params.id
+            return this.$route.params.project_id
         }
     },
     created () {
         this.isLoading = true
-        this.$store.dispatch('Projects/getProject', { id: this.$route.params.id })
+        this.$store.dispatch('Projects/getProject', { id: this.$route.params.project_id })
             .then(() => {
                 this.isLoading = false
             })

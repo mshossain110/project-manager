@@ -55,4 +55,6 @@ Route::group([
     Route::put('discussions/{id}/privacy', 'TaskController@privacy');
     Route::resource('discussions', 'DiscussionController', ['except' => ['edit']]);
     
+    Route::resource('comments', 'CommentController', ['except' => ['edit']]);
+    
 });

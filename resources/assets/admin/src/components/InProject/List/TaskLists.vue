@@ -73,7 +73,7 @@ export default {
     computed: {
         ...mapState('List', ['lists']),
         project_id () {
-            return this.$route.params.id
+            return this.$route.params.project_id
         }
     },
     created () {
