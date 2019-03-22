@@ -1,4 +1,4 @@
-
+import moment from 'moment'
 export default {
     data () {
         return {
@@ -19,7 +19,12 @@ export default {
     },
 
     methods: {
-
+        momentFormat (date, format) {
+            format = format || 'DD MMM'
+            if (date) {
+                return moment(date).format(format)
+            }
+        }
     }
 
 }

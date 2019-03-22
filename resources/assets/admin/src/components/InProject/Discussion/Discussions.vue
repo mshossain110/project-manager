@@ -32,14 +32,29 @@
                 </Transition>
 
                 <div class="discussion-container">
-                    <ul>
-                        <li
+                    <VTimeline
+                        align-top
+                        dense
+                    >
+                        <VTimelineItem
                             v-for="discussion in discussions"
                             :key="discussion.id"
+                            fill-dot
                         >
-                            <Discussion :discussion="discussion" />
-                        </li>
-                    </ul>
+                            <template v-slot:icon>
+                                <VAvatar>
+                                    <img src="http://i.pravatar.cc/64">
+                                </VAvatar>
+                            </template>
+                            <template v-slot:opposite>
+                                <span>{{ momentFormat(discussion.created_at.date, 'DD MMM YYYY') }}</span>
+                            </template>
+
+                            <Discussion
+                                :discussion="discussion"
+                            />
+                        </vtimelineitem>
+                    </VTimeline>
                 </div>
             </VCard>
         </VFlex>
@@ -78,9 +93,18 @@ export default {
 </script>
 <style lang="stylus">
 .discussion-container
-    margin-top: 20px
-    ul
-        margin: 0;
-        padding: 0;
-        list-style: none;
+    padding: 20px
+    .v-timeline-item__opposite
+        flex: 1 1 auto;
+        align-self: center;
+        max-width: calc(50% - 48px);
+        margin: 0 !important;
+        position: absolute;
+        left: -12px;
+        display: block;
+        top: 52px;
+        background: #333;
+        color: #fff;
+        padding: 4px;
+        font-size: 10px;
 </style>

@@ -36,7 +36,7 @@
 
 <script>
 import Assignee from '@ac/common/Assignee.vue'
-import moment from 'moment'
+
 export default {
     components: {
         Assignee
@@ -56,13 +56,7 @@ export default {
 
     },
     methods: {
-        momentFormat (date) {
-            if (date) {
-                return moment(date).format('DD MMM')
-            }
-        },
         changeTaskStatus () {
-            console.log(this.task.status)
             this.$store.dispatch('List/changeTaskStatus', {
                 id: this.task.id,
                 status: this.task.status === 'incomplete' ? 1 : 0
