@@ -21,13 +21,18 @@
                             </VAvatar>
                         </template>
 
-                        <Comment :comment="comment" />
+                        <Comment
+                            :comment="comment"
+                            :commentable-type="commentableType"
+                            :commentable-id="commentableId"
+                        />
                     </vtimelineitem>
                 </VTimeline>
             </VContainer>
             <CommentForm
                 commentable-type="discussion_board"
                 :commentable-id="commentableId"
+                newcomment
             />
         </VFlex>
     </VLayout>
@@ -93,4 +98,13 @@ export default {
                         font-size 10px
             &:hover .v-card__text
                 background-color #f3f3f3
+            .v-btn--icon
+                margin 0
+                padding 0
+                width 16px
+                height 16px
+                display none;
+            &:hover .v-btn--icon
+                display inline
+
 </style>

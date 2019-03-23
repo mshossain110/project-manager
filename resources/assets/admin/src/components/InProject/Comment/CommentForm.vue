@@ -9,16 +9,19 @@
         >
             <VTextarea
                 v-model="comment.content"
+                :append-icon="appendIcon"
+                prepend-icon="attach_file"
                 auto-grow
                 autofocus
                 row-height="12"
                 background-color="rgba(156, 153, 153, 0.06)"
-                clearable
+                :clearable="newcomment"
                 counter
                 light
                 box
                 :loading="isLoading"
                 label="Replay"
+                @click:append="clearContent"
             />
             <VBtn
                 :disabled="!hascontent"
@@ -49,6 +52,10 @@ export default {
         commentableId: {
             type: Number,
             required: true
+        },
+        newcomment: {
+            type: Boolean,
+            default: false
         }
     },
     data () {
@@ -59,6 +66,9 @@ export default {
     computed: {
         hascontent () {
             return typeof this.comment.content === 'string' && this.comment.content.length > 0
+        },
+        appendIcon () {
+            return this.newcomment ? 'undefined' : 'clear'
         }
     },
     methods: {
@@ -72,11 +82,59 @@ export default {
                 project_id: this.$route.params.project_id,
                 commentable_type: this.commentableType
             }
-
-            axios.post('/api/comments', params)
-                .then(() => {
-
-                })
+            if (this.comment.id) {
+                axios.put(`/api/comments/${this.comment.id}`, params)
+                    .then((res) => {
+                        this.$store.commit('setSnackbar',
+                            {
+                                message: res.data.message,
+                                status: res.status,
+                                color: 'success',
+                                show: true
+                            },
+                            { root: true })
+                        Bus.$emit('Comment:update', res.data.data)
+                    })
+                    .catch((error) => {
+                        this.$store.commit('setSnackbar',
+                            {
+                                message: error.response.data.message,
+                                status: error.response.status,
+                                color: 'error',
+                                show: true
+                            },
+                            { root: true })
+                    })
+            } else {
+                axios.post('/api/comments', params)
+                    .then((res) => {
+                        this.$store.commit('setSnackbar',
+                            {
+                                message: res.data.message,
+                                status: res.status,
+                                color: 'success',
+                                show: true
+                            },
+                            { root: true })
+                        Bus.$emit('Comment:new', res.data.data)
+                    })
+                    .catch((error) => {
+                        this.$store.commit('setSnackbar',
+                            {
+                                message: error.response.data.message,
+                                status: error.response.status,
+                                color: 'error',
+                                show: true
+                            },
+                            { root: true })
+                    })
+            }
+        },
+        clearContent () {
+            if (this.newcomment) {
+                this.comment.content = ''
+            }
+            this.$emit('clear')
         }
     }
 }
@@ -92,5 +150,8 @@ export default {
         padding: 5px;
         border-radius: 50%;
         color: #fff;
+    .v-btn
+        top: -35px
+        left: 24px
 
 </style>

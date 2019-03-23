@@ -55,85 +55,38 @@ class CommentController  extends ApiController {
 
     public function store( Request $request ) {
         $data       = $request->all();
-        // $media_data = $request->get_file_params();
         $type       = $request->get('type');
 
         $commentable_type = $request->get( 'commentable_type' );
-        $commentable_id = $request->get('commentable_id');
-    
-        // $files      = array_key_exists( 'files', $media_data ) ? $media_data['files'] : null;
-        
+        $commentable_id = $request->get('commentable_id');   
         $comment = Comment::create( $data );
 
         if ( $type ) {
             $comment->type = $type;
         }
 
-        // if ( $files ) {
-        //     $this->attach_files( $comment, $files );
-        // }
-
-        
-
-        // $message = [
-            
-        //     // 'activity' => $this->last_activity( $commentable_type, $commentable_id ),
-        // ];
-
         return $this->respondWithItem($comment, new CommentTransformer);
         
     }
 
-    public function update( Request $request ) {
+    public function update( Request $request, $id ) {
         // Grab non-empty inputs
         $data = $request->all( );
 
-        // Grab file data inputs
-        // $media_data = $request->get_file_params();
-
-        // An array of files
-        // $files = array_key_exists( 'files', $media_data ) ? $media_data['files'] : null;
-
-        // An array of file ids that needs to be deleted
-        // $files_to_delete = $request->get( 'files_to_delete' );
-
-        $comment = Comment::find( $data['comment_id'] );
+        $comment = Comment::find( $id );
 
         $comment->update( $data );
-
-        // if ( $files ) {
-        //     $this->attach_files( $comment, $files );
-        // }
-
-        // if ( $files_to_delete ) {
-        //     $this->detach_files( $comment, $files_to_delete );
-        // }
-
-        // $message = [
-            
-        //     'activity' => $this->last_activity( $comment->commentable_type, $comment->commentable_id  ),
-        // ];
-
         return $this->respondWithItem($comment, new CommentTransformer);
     }
 
     public function destroy( $id ) {
 
-        $comment    = Comment::find( $$id );
+        $comment    = Comment::find( $id );
         
         $resource_type = $comment->commentable_type;
         $resource_id = $comment->commentable_id;
-
-        // $this->detach_files( $comment );
         $comment->replies()->delete();
-        // $comment->files()->delete();
         $comment->delete();
-
-        // $message = [
-            
-        //     'activity' => $this->last_activity( $resource_type, $resource_id ),
-        // ];
-
         return $this->respondWithMessage("Comment delete Successfully");
     }
 }
