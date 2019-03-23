@@ -47,22 +47,8 @@ class DiscussionBoardTransformer extends TransformerAbstract {
     }
 
     public function includeComments( Discussion_Board $item ) {
-        $page = isset( $_GET['comment_page'] ) ? intval( $_GET['comment_page'] ) : 1;
-
-        // Paginator::currentPageResolver(function () use ($page) {
-        //     return $page;
-        // });
-
-        $comments = $item->comments()
-            ->orderBy( 'created_at', 'ASC' )
-            ->get();
-
-        //$comment_collection = $comments->getCollection();
-        $resource = $this->collection( $comments, new CommentTransformer );
-
-        //$resource->setPaginator( new IlluminatePaginatorAdapter( $comments ) );
-        
-        return $resource;
+        $comments = $item->comments;
+        return $this->collection( $comments, new CommentTransformer );
     }
 
     public function includeFiles( Discussion_Board $item ) {

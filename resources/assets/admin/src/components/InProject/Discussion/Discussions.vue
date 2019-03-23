@@ -84,7 +84,7 @@ export default {
     },
     created () {
         this.isLoading = true
-        this.$store.dispatch('Discussion/getDiscussions', { project_id: this.project_id })
+        this.$store.dispatch('Discussion/getDiscussions', { project_id: this.project_id, include: 'comments' })
             .then(() => {
                 this.isLoading = false
             })

@@ -17,20 +17,21 @@
                 {{ discussion.description }}
             </div>
 
-            <CommentForm
-                :comment="newComment"
-                :discuss="discussion"
+            <Comments
+                :comments="discussion.comments.data"
+                commentable-type="discussion_board"
+                :commentable-id="discussion.id"
             />
         </VCardText>
     </VCard>
 </template>
 
 <script>
-import CommentForm from './CommentForm.vue'
+import Comments from '@ac/InProject/Comment/Comments.vue'
 
 export default {
     components: {
-        CommentForm
+        Comments
     },
     props: {
         discussion: {

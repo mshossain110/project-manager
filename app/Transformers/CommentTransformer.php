@@ -17,20 +17,20 @@ class CommentTransformer extends TransformerAbstract {
      * @var array
      */
     protected $availableIncludes = [
-        'replies'
+        'replies', 'files', 'creator', 'updater'
     ];
 
     protected $defaultIncludes = [
-        'files', 'creator', 'updater'
+        
     ];
 
     public function transform( Comment $item ) {
         return [
             'id'               => (int) $item->id,
-            'content'          => pm_get_content( $item->content ),
+            'content'          => $item->content,
             'commentable_type' => $item->commentable_type,
             'commentable_id'   => $item->commentable_id,
-            'created_at'       => format_date( $item->created_at ),
+            'created_at'       =>$item->created_at,
             'meta'       => [
                 'total_replies' => $item->replies->count(),
             ],
