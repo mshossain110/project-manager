@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 import DiscussionForm from './DiscussionForm.vue'
 import Discussion from './Discussion.vue'
 
@@ -88,6 +88,12 @@ export default {
             .then(() => {
                 this.isLoading = false
             })
+        Bus.$on('Comment:new', this.newComment)
+        Bus.$on('Comment:update', this.newComment)
+        Bus.$on('Comment:delete', this.deleteComment)
+    },
+    methods: {
+        ...mapMutations('Discussion', ['newComment', 'deleteComment'])
     }
 }
 </script>

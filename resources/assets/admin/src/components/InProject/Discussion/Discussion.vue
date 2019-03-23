@@ -8,17 +8,21 @@
         >
             <VToolbarTitle>{{ discussion.title }}</VToolbarTitle>
             <VSpacer />
-            <VBtn icon>
+            <VBtn
+                icon
+                @click="showcomments = !showcomments"
+            >
                 <VIcon>comment</VIcon>
             </VBtn>
         </VToolbar>
-        <VCardText class="white ">
+        <VCardText class="white">
             <div class="description text--primary">
                 {{ discussion.description }}
             </div>
 
             <Comments
-                :comments="discussion.comments.data"
+                v-if="showcomments"
+                :comments="comments"
                 commentable-type="discussion_board"
                 :commentable-id="discussion.id"
             />
@@ -28,7 +32,6 @@
 
 <script>
 import Comments from '@ac/InProject/Comment/Comments.vue'
-
 export default {
     components: {
         Comments
@@ -41,17 +44,13 @@ export default {
     },
     data () {
         return {
-            newComment: {}
+            showcomments: false
         }
     },
     computed: {
-
-    },
-    created () {
-
-    },
-    methods: {
-
+        comments () {
+            return this.discussion.comments ? this.discussion.comments.data : []
+        }
     }
 }
 </script>

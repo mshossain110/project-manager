@@ -24,6 +24,26 @@ export default {
         deleteDiscussion (state, id) {
             let i = state.discussions.findIndex(l => l.id === id)
             state.discussions.splice(i, 1)
+        },
+        newComment (state, payload) {
+            let i = state.discussions.findIndex(o => o.id === payload.commentable_id)
+            if (i !== -1) {
+                if (typeof state.discussions[i].comments === 'undefined') {
+                    state.discussions[i].comments = {
+                        data: [payload]
+                    }
+                } else {
+                    state.discussions[i].comments.data.push(payload)
+                    state.discussions[i].comments.data = _.unionBy(state.discussions[i].comments.data, [], 'id')
+                }
+            }
+        },
+        deleteComment (state, payload) {
+            let i = state.discussions.findIndex(o => o.id === payload.commentable_id)
+            if (i !== -1) {
+                let j = state.discussions[i].comments.data.findIndex(a => a.id === payload.id)
+                state.discussions[i].comments.data.splice(j, 1)
+            }
         }
     },
     actions: {

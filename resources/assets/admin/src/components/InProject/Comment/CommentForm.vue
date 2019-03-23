@@ -94,6 +94,7 @@ export default {
                             },
                             { root: true })
                         Bus.$emit('Comment:update', res.data.data)
+                        this.$emit('clear')
                     })
                     .catch((error) => {
                         this.$store.commit('setSnackbar',
@@ -117,6 +118,7 @@ export default {
                             },
                             { root: true })
                         Bus.$emit('Comment:new', res.data.data)
+                        this.comment.content = ''
                     })
                     .catch((error) => {
                         this.$store.commit('setSnackbar',

@@ -91,7 +91,7 @@ export default {
                             show: true
                         },
                         { root: true })
-                    Bus.$emit('Comment:delete', this.comment.id)
+                    Bus.$emit('Comment:delete', this.comment)
                 })
                 .catch((error) => {
                     this.$store.commit('setSnackbar',
