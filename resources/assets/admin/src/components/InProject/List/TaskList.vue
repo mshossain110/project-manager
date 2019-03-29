@@ -1,7 +1,10 @@
 <template>
     <div class="list">
         <div class="list-collumn">
-            <div class="list-title">
+            <div
+                class="list-title"
+                @click="singleList"
+            >
                 {{ list.title }}
             </div>
 
@@ -97,6 +100,18 @@ export default {
         progress () {
             let meta = this.list.meta
             return (meta.total_complete_tasks / meta.total_tasks) * 100
+        }
+    },
+    methods: {
+        singleList () {
+            this.$router.push({
+                name: 'list-single',
+                params: {
+                    project_id: this.$route.params.project_id,
+                    type: 'list',
+                    id: this.list.id
+                }
+            })
         }
     }
 }

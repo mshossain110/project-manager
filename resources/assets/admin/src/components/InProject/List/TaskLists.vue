@@ -37,17 +37,22 @@
                     />
                 </Transition>
 
-                <div class="list-container">
-                    <ul>
-                        <li
-                            v-for="list in lists"
-                            :key="list.id"
-                        >
-                            <TaskList
-                                :list="list"
-                            />
-                        </li>
-                    </ul>
+                <div class="list-container side-bar">
+                    <div class="list-wrap">
+                        <ul>
+                            <li
+                                v-for="list in lists"
+                                :key="list.id"
+                            >
+                                <TaskList
+                                    :list="list"
+                                />
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="sidebar-wrap">
+                        <RouterView />
+                    </div>
                 </div>
             </VCard>
         </VFlex>
@@ -55,7 +60,6 @@
 </template>
 
 <script>
-
 import NewListForm from './NewListForm.vue'
 import TaskList from './TaskList.vue'
 import { mapState } from 'vuex'
@@ -89,12 +93,21 @@ export default {
 <style lang="stylus">
 .list-container
     display: block
-    ul
-        padding:0
-        margin:0
-        list-style:none
-        li
-            list-style: none
-            padding: 0
+    .list-wrap
+        flex-basis: 50%;
+        ul
+            padding:0
+            margin:0
+            list-style:none
+            li
+                list-style: none
+                padding: 0
+    &.side-bar
+        display: flex;
+        flex-basis: 50%;
+        flex-wrap: nowrap;
+        flex-grow: 1;
+    .sidebar-wrap
+        flex-basis: 50%;
 
 </style>

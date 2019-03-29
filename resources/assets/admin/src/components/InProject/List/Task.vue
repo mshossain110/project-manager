@@ -1,5 +1,8 @@
 <template>
-    <div class="task">
+    <div
+        class="task"
+        @click="singleTask"
+    >
         <div class="task-status">
             <VCheckbox
                 v-model="taskstatus"
@@ -60,6 +63,20 @@ export default {
             this.$store.dispatch('List/changeTaskStatus', {
                 id: this.task.id,
                 status: this.task.status === 'incomplete' ? 1 : 0
+            })
+        },
+        singleTask (event) {
+            if (event.target.closest('.task-status') || event.target.closest('.action')) {
+                return
+            }
+
+            this.$router.push({
+                name: 'list-single',
+                params: {
+                    project_id: this.$route.params.project_id,
+                    type: 'task',
+                    id: this.task.id
+                }
             })
         }
     }

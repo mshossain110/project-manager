@@ -30,7 +30,7 @@
                 </VTimeline>
             </VContainer>
             <CommentForm
-                commentable-type="discussion_board"
+                :commentable-type="commentableType"
                 :commentable-id="commentableId"
                 newcomment
             />

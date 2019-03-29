@@ -1,5 +1,6 @@
 import InProject from './InProject.vue'
 import TaskLists from './List/TaskLists.vue'
+import Single from './List/Single.vue'
 import Discussions from './Discussion/Discussions.vue'
 import Empty from './List.vue'
 
@@ -10,13 +11,20 @@ const ProjectRoute = [
         children: [
             {
                 path: '/',
-                redirect: 'list',
+                redirect: 'lists',
                 name: 'inProject'
             },
             {
-                path: 'list',
+                path: 'lists',
                 component: TaskLists,
-                name: 'list-page'
+                name: 'list-page',
+                children: [
+                    {
+                        path: ':type/:id',
+                        name: 'list-single',
+                        component: Single
+                    }
+                ]
             },
             {
                 path: 'discussaion',
