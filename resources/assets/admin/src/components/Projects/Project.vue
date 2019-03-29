@@ -70,7 +70,7 @@ export default {
             this.$router.push({
                 name: 'inProject',
                 params: {
-                    id: this.project.id
+                    project_id: this.project.id
                 }
             })
         }

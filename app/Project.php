@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\Common;
 use Carbon\Carbon;
+use App\Observers\ProjectObserver;
 use Auth;
 
 class Project extends Model
@@ -43,6 +44,17 @@ class Project extends Model
     protected $dates = [
     	'est_completion_date'
     ];
+
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public static function boot()
+    {
+        parent::boot();
+        Project::observe(ProjectObserver::class);
+    }
 
     public function scopeSearch( $query, $search ) { 
         $query->where('title',  'LIKE', '%'.$search.'%' )->orWhere( 'description', 'LIKE', '%'.$search.'%');
