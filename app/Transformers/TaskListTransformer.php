@@ -20,7 +20,6 @@ class TaskListTransformer extends TransformerAbstract {
     protected $availableIncludes = [
         'assignees',
         'tasks',
-        
         'comments',
         'files',
         'creator', 'updater', 'milestone'
@@ -61,22 +60,8 @@ class TaskListTransformer extends TransformerAbstract {
     }
 
     public function includeComments( Task_List $item ) {
-        $page = isset( $_GET['comment_page'] ) ? intval($_GET['comment_page']) : 1;
-
-        Paginator::currentPageResolver(function () use ($page) {
-            return $page;
-        }); 
-
-        $comments = $item->comments()
-            ->orderBy( 'created_at', 'ASC' )
-            ->paginate( pm_config('app.comment_per_page') );
-
-        $comment_collection = $comments->getCollection();
-        $resource = $this->collection( $comment_collection, new CommentTransformer );
-
-        $resource->setPaginator( new IlluminatePaginatorAdapter( $comments ) );
-
-        return $resource;
+        $comments = $item->comments;
+        return $this->collection( $comments, new CommentTransformer );
     }
 
     public function includeFiles( Task_List $item ) {

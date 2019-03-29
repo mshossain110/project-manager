@@ -72,11 +72,11 @@
                                         <span
                                             v-if="task.start_at"
                                             class="green--text"
-                                        >{{ momentFormat(task.start_at) }} </span>
+                                        > {{ momentFormat(task.start_at.date) }} </span>
                                         <span
                                             v-if="task.due_date"
                                             class="red--text"
-                                        > - {{ momentFormat(task.due_date) }}</span>
+                                        > - {{ momentFormat(task.due_date.date) }}</span>
                                     </span>
                                 </VBtn>
                             </template>
@@ -101,7 +101,7 @@
                         <h3>{{ task.title }}</h3>
                     </div>
                     <div class="task-description">
-                        {{ task.descroption }}
+                        {{ task.description }}
                     </div>
                 </div>
                 <Comments
