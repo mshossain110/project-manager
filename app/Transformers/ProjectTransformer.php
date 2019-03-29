@@ -12,11 +12,11 @@ class ProjectTransformer extends TransformerAbstract {
     use ResourceEditors;
 
     protected $defaultIncludes = [
-        'assignees',
+        'assignees', 'categories'
     ];
 
     protected $availableIncludes = [
-        'overview_graph', 'task_lists', 'tasks', 'creator', 'updater', 'categories', 'meta'
+        'overview_graph', 'task_lists', 'tasks', 'creator', 'updater', 'meta'
     ];
 
     public function transform( Project $item ) {

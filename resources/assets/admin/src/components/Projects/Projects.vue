@@ -12,16 +12,28 @@
                     flat
                 >
                     <VToolbarItems class="hidden-sm-and-down">
-                        <VBtn flat>
+                        <VBtn
+                            flat
+                            :to="{name:'project_active'}"
+                        >
                             Active
                         </VBtn>
-                        <VBtn flat>
+                        <VBtn
+                            flat
+                            :to="{name:'project_complete'}"
+                        >
                             Complete
                         </VBtn>
-                        <VBtn flat>
+                        <VBtn
+                            flat
+                            :to="{name:'project_favourite'}"
+                        >
                             Favourite
                         </VBtn>
-                        <VBtn flat>
+                        <VBtn
+                            flat
+                            :to="{name:'project_all'}"
+                        >
                             All
                         </VBtn>
                     </VToolbarItems>

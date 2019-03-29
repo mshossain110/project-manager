@@ -88,7 +88,7 @@ export default {
                 { icon: 'people', text: 'Users', name: 'users', disabled: false },
                 { icon: 'fingerprint', text: 'Roles', name: 'users-role', disabled: false },
                 { heading: 'Porject Manager' },
-                { icon: 'camera', text: 'Projects', name: 'projects', disabled: false },
+                { icon: 'camera', text: 'Projects', name: 'project_active', disabled: false },
                 { icon: 'camera', text: 'Category', name: 'category', disabled: false },
                 { heading: 'Admin Settings' },
                 { icon: 'settings', text: 'Settings', name: 'settings', disabled: true }

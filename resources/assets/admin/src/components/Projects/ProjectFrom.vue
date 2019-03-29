@@ -41,10 +41,10 @@
                             />
                         </VFlex>
                         <VFlex xs12>
-                            <CategorySelectForm v-model="project.categories" />
+                            <CategorySelectForm v-model="project.categories.data" />
                         </VFlex>
                         <VFlex xs12>
-                            <UserSelectForm v-model="project.assaingee" />
+                            <UserSelectForm v-model="project.assignees.data" />
                         </VFlex>
                     </VLayout>
                 </VContainer>
@@ -93,10 +93,14 @@ export default {
                 return {
                     title: '',
                     description: '',
-                    categories: [],
+                    categories: {
+                        data: []
+                    },
                     budget: '',
                     password: '',
-                    assignees: []
+                    assignees: {
+                        data: []
+                    }
                 }
             }
         }
@@ -117,14 +121,14 @@ export default {
             this.$validator.validateAll()
 
             let assignees = []; let categories = []
-            this.project.assignees.map(u => {
+            this.project.assignees.data.map(u => {
                 assignees.push({
                     user_id: u.id,
                     role_id: 1
                 })
             })
 
-            this.project.categories.map(c => {
+            this.project.categories.data.map(c => {
                 categories.push(c.id)
             })
 
@@ -144,7 +148,7 @@ export default {
                         this.$emit('close', false)
                     })
             } else {
-                this.$store.dispatch('Users/updateUser', project)
+                this.$store.dispatch('Projects/updateProject', project)
                     .then(() => {
                         this.$emit('close', false)
                     })

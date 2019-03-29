@@ -32,7 +32,7 @@ export default {
         ...mapState('Projects', ['projects'])
     },
     created () {
-        this.$store.dispatch('Projects/getProjects')
+        this.$store.dispatch('Projects/getProjects', { status: 'complete' })
     }
 
 }

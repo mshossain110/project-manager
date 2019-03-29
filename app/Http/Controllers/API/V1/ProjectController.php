@@ -182,7 +182,7 @@ class ProjectController extends ApiController {
 		
 	}
 
-	public function update( Request $request ) {
+	public function update( Request $request, $id ) {
 		// Extract non empty inputs and update project
 		$data    = $request->only( [
 			'title',
@@ -196,7 +196,7 @@ class ProjectController extends ApiController {
 			'projectable_type',
 		]);
 
-		$project = Project::find( $data['id'] );
+		$project = Project::find( $id );
 
 		$project->update_model( $data );
 
@@ -215,9 +215,7 @@ class ProjectController extends ApiController {
         return $this->respondWithItem($project, new ProjectTransformer);
 	}
 
-	public function destroy( Request $request ) {
-		$id = $request->get('id');
-
+	public function destroy( Request $request, $id ) {
 		// Find the requested resource
 		$project =  Project::find( $id );
 
@@ -227,7 +225,7 @@ class ProjectController extends ApiController {
 		$tasks = $project->tasks;
 
         foreach ( $tasks as $task ) {
-            $task->files()->delete();
+            // $task->files()->delete();
             $task->assignees()->delete();
             $task->metas()->delete();
         }
@@ -242,18 +240,18 @@ class ProjectController extends ApiController {
 		$project->task_lists()->delete();
 
 		$project->discussion_boards()->delete();
-		$project->milestones()->delete();
+		// $project->milestones()->delete();
 		$project->comments()->delete();
 		$project->assignees()->detach();
 
-		$project->settings()->delete();
+		// $project->settings()->delete();
 		$project->activities()->delete();
 		$project->meta()->delete();
 
 		// Delete the main resource
 		$project->delete();
 		return $this->respondWithArray([
-			'message' => pm_get_text('success_messages.project_deleted')
+			'message' => "Project delete successfully."
 		]);
 	}
 

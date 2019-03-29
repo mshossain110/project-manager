@@ -21,11 +21,20 @@ export default {
     },
     mutations: {
         setProjects (state, payload) {
-            payload = _.isArray(payload) ? payload : [payload]
-            state.projects = _.unionBy(payload, state.projects, 'id')
+            state.projects = payload
         },
         setProject (state, payload) {
             state.project = payload
+        },
+        addProjects (state, payload) {
+            if (state.projects.length && state.projects[0].state === 'incomplete') {
+                state.projects.push(payload)
+            }
+        },
+        updateProject (state, payload) {
+            if (state.projects.length && state.projects[0].state === payload.status) {
+                state.projects = _.unionBy([payload], state.projects, 'id')
+            }
         },
         setProjectMeta (state, payload) {
             state.projectMeta = payload
@@ -81,7 +90,7 @@ export default {
             return new Promise((resolve, reject) => {
                 axios.post('/api/projects', params)
                     .then((res) => {
-                        commit('setProjects', res.data.data)
+                        commit('addProjects', res.data.data)
                         commit('setSnackbar',
                             {
                                 message: res.data.message,
@@ -109,7 +118,7 @@ export default {
             return new Promise((resolve, reject) => {
                 axios.put(`/api/projects/${params.id}`, params)
                     .then((res) => {
-                        commit('setProjects', res.data.data)
+                        commit('updateProject', res.data.data)
                         commit('setSnackbar',
                             {
                                 message: res.data.message,
