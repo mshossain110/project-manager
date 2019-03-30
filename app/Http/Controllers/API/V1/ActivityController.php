@@ -8,8 +8,6 @@ use App\Transformers\ActivityTransformer;
 
 class ActivityController  extends ApiController {
 
-    use Transformer_Manager;
-
     public function index( Request $request ) {
         
         $project_id = $request->get( 'project_id' );
@@ -20,8 +18,8 @@ class ActivityController  extends ApiController {
             $activities = Activity::orderBy( 'created_at', 'DESC' )
             ->paginate( $per_page );
         } else {
-            $activities = Activity::where('activities.project_id', $project_id )
-            ->orderBy( 'activities.created_at', 'desc' )
+            $activities = Activity::where('project_id', $project_id )
+            ->orderBy( 'created_at', 'desc' )
             ->paginate( $per_page );
             
         }

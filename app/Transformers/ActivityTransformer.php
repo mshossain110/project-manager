@@ -14,16 +14,16 @@ class ActivityTransformer extends TransformerAbstract {
 
     public function transform( Activity $item ) {
         
-        $message = pm_get_text( "activities.{$item->action}" ); 
+        //$message = pm_get_text( "activities.{$item->action}" ); 
         
 
         return [
             'id'            => (int) $item->id,
-            'message'       => $message,
+            //'message'       => $message,
             'action'        => $item->action,
             'action_type'   => $item->action_type,
             'meta'          => $this->parse_meta( $item ),
-            'committed_at'  => format_date( $item->created_at ),
+            'committed_at'  => $item->created_at,
             'resource_id'   => $item->resource_id,
             'resource_type' => $item->resource_type,
         ];

@@ -2,6 +2,7 @@ import InProject from './InProject.vue'
 import TaskLists from './List/TaskLists.vue'
 import Single from './List/Single.vue'
 import Discussions from './Discussion/Discussions.vue'
+import Activities from './Activity/Activities.vue'
 import Empty from './List.vue'
 
 const ProjectRoute = [
@@ -43,7 +44,7 @@ const ProjectRoute = [
             },
             {
                 path: 'activity',
-                component: Empty,
+                component: Activities,
                 name: 'activity-page'
             },
             {

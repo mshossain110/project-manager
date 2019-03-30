@@ -56,5 +56,7 @@ Route::group([
     Route::resource('discussions', 'DiscussionController', ['except' => ['edit']]);
     
     Route::resource('comments', 'CommentController', ['except' => ['edit']]);
+
+    Route::get('activities', 'ActivityController@index');
     
 });
