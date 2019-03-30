@@ -4,6 +4,7 @@ namespace App\Transformers;
 
 use League\Fractal\TransformerAbstract;
 use App\Activity;
+use Lang;
 
 
 class ActivityTransformer extends TransformerAbstract {
@@ -16,10 +17,11 @@ class ActivityTransformer extends TransformerAbstract {
         
         //$message = pm_get_text( "activities.{$item->action}" ); 
         
+        $message =  Lang::get("activites.{$item->action}");
 
         return [
             'id'            => (int) $item->id,
-            //'message'       => $message,
+            'message'       => $message,
             'action'        => $item->action,
             'action_type'   => $item->action_type,
             'meta'          => $this->parse_meta( $item ),
