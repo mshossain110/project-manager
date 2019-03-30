@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use App\Observers\TaskObserver;
 
 class Task extends Model
 {
@@ -36,6 +37,17 @@ class Task extends Model
     protected $attributes = [
         'priority' => 1,
     ];
+    
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public static function boot()
+    {
+        parent::boot();
+        Task::observe(TaskObserver::class);
+    }
 
     public function scopeCompleted($query) {
         return $query->where('status', Task::COMPLETE);

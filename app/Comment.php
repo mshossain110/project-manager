@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Observers\CommentdObserver;
 
 class Comment extends Model
 {
@@ -15,6 +16,17 @@ class Comment extends Model
         'created_by',
         'updated_by',
     ];
+
+        /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public static function boot()
+    {
+        parent::boot();
+        Comment::observe(CommentdObserver::class);
+    }
 
     public function replies() {
         return $this->hasMany( $this, 'commentable_id' )->where( 'commentable_type', 'comment' );

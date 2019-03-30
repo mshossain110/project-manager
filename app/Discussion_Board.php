@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Observers\DiscussionBoardObserver;
 
 class Discussion_Board extends Model
 {
@@ -19,6 +20,17 @@ class Discussion_Board extends Model
     ];
 
     protected $attributes = ['type' => 'discussion_board'];
+
+        /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public static function boot()
+    {
+        parent::boot();
+        Discussion_Board::observe(DiscussionBoardObserver::class);
+    }
 
     public function newQuery( $except_deleted = true ) {
         return parent::newQuery( $except_deleted )->where( 'type', '=', 'discussion_board' );

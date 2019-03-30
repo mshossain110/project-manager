@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\Common;
-
+use App\Observers\TaskListObserver;
 
 class Task_List extends Model {
     
@@ -25,7 +25,16 @@ class Task_List extends Model {
 
     protected $attributes = ['type' => 'task_list'];
 
-
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public static function boot()
+    {
+        parent::boot();
+        Task_List::observe(TaskListObserver::class);
+    }
 
     public function newQuery( $except_deleted = true ) {
         return parent::newQuery( $except_deleted )->where( 'type', '=', 'task_list' );
