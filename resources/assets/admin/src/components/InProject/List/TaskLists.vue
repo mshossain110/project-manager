@@ -29,7 +29,21 @@
                     >
                         Filter
                     </VBtn>
+                    <VBtn
+                        flat
+                        icon
+                        :color="sidebar? 'accent': ''"
+                        @click="sidebar = !sidebar"
+                    >
+                        <VIcon v-if="sidebar">
+                            vertical_split
+                        </VIcon>
+                        <VIcon v-if="!sidebar">
+                            view_headline
+                        </VIcon>
+                    </VBtn>
                 </VToolbar>
+
                 <Transition name="slide-y-transition">
                     <NewListForm
                         v-if="createList"
@@ -37,7 +51,10 @@
                     />
                 </Transition>
 
-                <div class="list-container side-bar">
+                <div
+                    class="list-container"
+                    :class="{'side-bar': sidebar}"
+                >
                     <div class="list-wrap">
                         <ul>
                             <li
@@ -50,9 +67,14 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="sidebar-wrap">
-                        <RouterView />
-                    </div>
+                    <Transition name="slide-x-transition">
+                        <div
+                            v-if="sidebar"
+                            class="sidebar-wrap"
+                        >
+                            <RouterView />
+                        </div>
+                    </Transition>
                 </div>
             </VCard>
         </VFlex>
@@ -71,7 +93,8 @@ export default {
     data () {
         return {
             isLoading: false,
-            createList: false
+            createList: false,
+            sidebar: true
         }
     },
     computed: {
