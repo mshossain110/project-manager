@@ -53,7 +53,7 @@
 
                 <div
                     class="list-container"
-                    :class="{'side-bar': sidebar}"
+                    :class="{'side-bar': openSidebar}"
                 >
                     <div class="list-wrap">
                         <ul>
@@ -69,7 +69,7 @@
                     </div>
                     <Transition name="slide-x-transition">
                         <div
-                            v-if="sidebar"
+                            v-if="openSidebar"
                             class="sidebar-wrap"
                         >
                             <RouterView />
@@ -101,6 +101,9 @@ export default {
         ...mapState('List', ['lists']),
         project_id () {
             return this.$route.params.project_id
+        },
+        openSidebar () {
+            return this.sidebar && this.$route.name === 'list-single'
         }
     },
     created () {
