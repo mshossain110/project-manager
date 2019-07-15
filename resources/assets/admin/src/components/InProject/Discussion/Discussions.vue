@@ -50,9 +50,7 @@
                                 <span>{{ momentFormat(discussion.created_at.date, 'DD MMM YYYY') }}</span>
                             </template>
 
-                            <Discussion
-                                :discussion="discussion"
-                            />
+                            <Discussion :discussion="discussion" />
                         </vtimelineitem>
                     </VTimeline>
                 </div>
