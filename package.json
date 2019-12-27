@@ -39,7 +39,6 @@
         "style-loader": "^0.22.1",
         "stylus": "^0.54.7",
         "stylus-loader": "^3.0.2",
-        "uglifyjs-webpack-plugin": "^2.2.0",
         "vue-eslint-parser": "^4.0.3",
         "vue-loader": "^15.8.3",
         "vue-style-loader": "^4.1.2",
