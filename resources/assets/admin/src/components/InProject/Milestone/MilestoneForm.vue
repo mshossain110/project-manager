@@ -1,6 +1,7 @@
 <template>
     <VForm
         class="milestone-form"
+        @submit.prevent="submit"
     >
         <div class="input-ourter">
             <input              
@@ -39,6 +40,28 @@ export default {
         
     },
     methods:{
+        submit () {
+            let data = {
+                id: this.milestone.id,
+                title: this.milestone.title,
+                description: this.milestone.description,
+                project_id: parseInt(this.$route.params.project_id),
+                private: this.lock
+            }
+            if (typeof this.milestone.id === 'undefined') {
+                this.$store.dispatch('Milestone/addMilestone', data)
+                    .then(() => {
+                        // Reset form using form class
+                        Object.assign(this.$data, this.$options.data.call(this))
+                    })
+            } else {
+                this.$store.dispatch('Milestone/updateMilestone', data)
+                    .then(() => {
+                    // Reset form using form class
+                        Object.assign(this.$data, this.$options.data.call(this))
+                    })
+            }
+        }
 
     }
 }

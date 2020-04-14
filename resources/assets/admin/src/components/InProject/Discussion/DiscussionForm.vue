@@ -55,7 +55,13 @@ export default {
     props: {
         discuss: {
             type: Object,
-            required: true
+              default:()=> ({
+                title : "",
+                description : "",
+                order : "",
+                status : "",
+                project_id : ""
+            })
         }
     },
     data () {

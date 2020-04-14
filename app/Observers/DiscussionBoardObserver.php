@@ -21,6 +21,9 @@ class DiscussionBoardObserver
             'discussion_board_title' => $discussionBoard->title,
         ];
 
+        $discussionBoard->created_by = Auth::id();
+        $discussionBoard->save();
+
         $this->log_activity( $discussionBoard, 'create_discussion_board', 'create', $meta );
     }
 
@@ -33,6 +36,9 @@ class DiscussionBoardObserver
     public function updated(Discussion_Board $discussionBoard)
     {
         $this->call_attribute_methods( $discussionBoard );
+
+        $discussionBoard->updated_by = Auth::id();
+        $discussionBoard->save();
     }
 
     public function deleting( Discussion_Board $discussionBoard ) {

@@ -35,43 +35,43 @@ class MilestoneTransformer extends TransformerAbstract {
     }
 
 
-    public function includeTaskLists( Milestone $item ) {
-        $page = isset( $_GET['task_list_page'] ) ? intval( $_GET['task_list_page'] ) : 1;
+    // public function includeTaskLists( Milestone $item ) {
+    //     $page = isset( $_GET['task_list_page'] ) ? intval( $_GET['task_list_page'] ) : 1;
 
-        Paginator::currentPageResolver(function () use ($page) {
-            return $page;
-        }); 
+    //     Paginator::currentPageResolver(function () use ($page) {
+    //         return $page;
+    //     }); 
 
-        $task_lists = $item->task_lists();
-        $task_lists = apply_filters('pm_task_list_query', $task_lists, $item->project_id, $item );
-        $task_lists = $task_lists->orderBy( 'created_at', 'DESC' )
-            ->paginate( 10 );
+    //     $task_lists = $item->task_lists();
+    //     $task_lists = apply_filters('pm_task_list_query', $task_lists, $item->project_id, $item );
+    //     $task_lists = $task_lists->orderBy( 'created_at', 'DESC' )
+    //         ->paginate( 10 );
 
-        $task_list_collection = $task_lists->getCollection();
-        $resource = $this->collection( $task_list_collection, new TaskListTransformer );
+    //     $task_list_collection = $task_lists->getCollection();
+    //     $resource = $this->collection( $task_list_collection, new TaskListTransformer );
 
-        $resource->setPaginator( new IlluminatePaginatorAdapter( $task_lists ) );
+    //     $resource->setPaginator( new IlluminatePaginatorAdapter( $task_lists ) );
 
-        return $resource;
-    }
+    //     return $resource;
+    // }
 
-    public function includeDiscussionBoards( Milestone $item ) {
-        $page = isset( $_GET['discussion_page'] ) ? intval( $_GET['discussion_page'] ) : 1;
+    // public function includeDiscussionBoards( Milestone $item ) {
+    //     $page = isset( $_GET['discussion_page'] ) ? intval( $_GET['discussion_page'] ) : 1;
 
-        Paginator::currentPageResolver(function () use ($page) {
-            return $page;
-        }); 
+    //     Paginator::currentPageResolver(function () use ($page) {
+    //         return $page;
+    //     }); 
 
-        $discussion_boards = $item->discussion_boards();
-        $discussion_boards = apply_filters( 'pm_discuss_query', $discussion_boards, $item->project_id, $item );
-        $discussion_boards = $discussion_boards->orderBy( 'created_at', 'DESC' )
-            ->paginate( 10 );
+    //     $discussion_boards = $item->discussion_boards();
+    //     $discussion_boards = apply_filters( 'pm_discuss_query', $discussion_boards, $item->project_id, $item );
+    //     $discussion_boards = $discussion_boards->orderBy( 'created_at', 'DESC' )
+    //         ->paginate( 10 );
 
-        $discussion_board_collection = $discussion_boards->getCollection();
-        $resource = $this->collection( $discussion_board_collection, new DiscussionBoardTransformer );
+    //     $discussion_board_collection = $discussion_boards->getCollection();
+    //     $resource = $this->collection( $discussion_board_collection, new DiscussionBoardTransformer );
 
-        $resource->setPaginator( new IlluminatePaginatorAdapter( $discussion_boards ) );
+    //     $resource->setPaginator( new IlluminatePaginatorAdapter( $discussion_boards ) );
 
-        return $resource;
-    }
+    //     return $resource;
+    // }
 }

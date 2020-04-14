@@ -2,7 +2,8 @@
 
 namespace App;
 
-use WeDevs\PM\Core\DB_Connection\Model;
+use Illuminate\Database\Eloquent\Model;
+use App\Observers\MilestoneObserver;
 
 class Milestone extends Model {
 
@@ -30,6 +31,17 @@ class Milestone extends Model {
         1 => 'incomplete',
         2 => 'complete',
     ];
+
+            /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public static function boot()
+    {
+        parent::boot();
+        Milestone::observe(MilestoneObserver::class);
+    }
 
     public function newQuery( $except_deleted = true ) {
         return parent::newQuery( $except_deleted )->where( 'type', '=', 'milestone' );
@@ -98,5 +110,11 @@ class Milestone extends Model {
 
     public function project() {
         return $this->belongsTo( 'App\Project', 'project_id' );
+    }
+
+    public function users() {
+        return $this->belongsToMany( 'App\User',  'boardables', 'board_id', 'boardable_id')
+            ->where( 'board_type', 'milestone' )
+            ->where( 'boardable_type', 'user' );
     }
 }
