@@ -1,5 +1,5 @@
 <template>
-     <VLayout row>
+    <VLayout row>
         <VFlex
             xs12
         >
@@ -12,7 +12,6 @@
                         small
                         color="success"
                         @click="createMilestone = ! createMilestone"
-                       
                     >
                         Craete New Mailstone
                     </VBtn>
@@ -27,27 +26,26 @@
                 </VToolbar>
                 <Transition name="slide-y-transition">
                     <MilestoneForm
-                    v-if="createMilestone"
-                       
+                        v-if="createMilestone"
                     />
                 </Transition>
             </VCard>
         </VFlex>
-     </VLayout>
+    </VLayout>
 </template>
 
 <script>
 import MilestoneForm from './MilestoneForm.vue'
 export default {
-    components:{
+    components: {
         MilestoneForm
     },
 
-    data(){
-        return{
-            createMilestone:false
+    data () {
+        return {
+            createMilestone: false
         }
     }
-    
+
 }
 </script>

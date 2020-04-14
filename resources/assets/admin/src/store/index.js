@@ -5,6 +5,7 @@ import Category from '@ac/Category/store'
 import Projects from '@ac/Projects/store'
 import List from '@ac/InProject/List/store'
 import Discussion from '@ac/InProject/Discussion/store'
+import Milestone from '@ac/InProject/Milestone/store'
 
 Vue.use(Vuex)
 
@@ -68,6 +69,7 @@ export default new Vuex.Store({
         Category,
         Projects,
         List,
-        Discussion
+        Discussion,
+        Milestone
     }
 })

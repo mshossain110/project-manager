@@ -19,23 +19,23 @@ Route::group([
 ], function () {
     Route::delete('users/delete-multiple', 'UserController@deleteMultiple');
     Route::get('users/search', 'UserController@search');
-    Route::resource('users', 'UserController', ['except' => ['edit']]);
+    Route::apiResource('users', 'UserController');
 
     Route::post('roles/{role_id}/attach_users', 'RoleController@attachUser');
-    Route::resource('roles', 'RoleController', ['except' => ['edit']]);
+    Route::apiResource('roles', 'RoleController');
     Route::get('permissions', 'RoleController@getAbilities');
     
-    Route::resource('category', 'CategoryController', ['except' => ['edit']]);
+    Route::apiResource('category', 'CategoryController');
 
     Route::post('projects/{id}/favourite', 'ProjectController@favourite_project');
-    Route::resource('projects', 'ProjectController', ['except' => ['edit']]);
+    Route::apiResource('projects', 'ProjectController');
     
     Route::post('lists/sorting', 'TaskListController@list_sorting' );
     Route::get('lists/search', 'TaskListController@list_search' );
     Route::put('lists/{id}/privacy', 'TaskListController@privacy' );
     Route::put('lists/{id}/detach-users', 'TaskListController@detach_users' );
     Route::put('lists/{id}/attach-users', 'TaskListController@attach_users' );
-    Route::resource('lists', 'TaskListController', ['except' => ['edit']]);
+    Route::apiResource('lists', 'TaskListController');
     
     
     
@@ -48,14 +48,15 @@ Route::group([
     Route::get('tasks/{id}/activity', 'TaskController@activities');
     Route::put('tasks/{id}/privacy', 'TaskController@privacy');
     Route::put('tasks/{id}/change-status', 'TaskController@change_status');
-    Route::resource('tasks', 'TaskController', ['except' => ['edit']]);
+    Route::apiResource('tasks', 'TaskController');
    
     Route::put('discussions/{id}/attach-users', 'TaskController@attach_users');
     Route::put('discussions/{id}/detach-users', 'TaskController@detach_users');
     Route::put('discussions/{id}/privacy', 'TaskController@privacy');
-    Route::resource('discussions', 'DiscussionController', ['except' => ['edit']]);
+    Route::apiResource('discussions', 'DiscussionController');
+    Route::apiResource('milestones', 'MilestoneController');
     
-    Route::resource('comments', 'CommentController', ['except' => ['edit']]);
+    Route::apiResource('comments', 'CommentController');
 
     Route::get('activities', 'ActivityController@index');
     

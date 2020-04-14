@@ -2,7 +2,7 @@
 
 namespace App;
 
-use WeDevs\PM\Core\DB_Connection\Model as Eloquent;
+use WeDevs\PM\Core\DB_Connection\Model;
 
 class Milestone extends Model {
 

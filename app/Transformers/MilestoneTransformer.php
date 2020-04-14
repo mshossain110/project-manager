@@ -25,25 +25,15 @@ class MilestoneTransformer extends TransformerAbstract {
             'title'        => $item->title,
             'description'  => $item->description,
             'order'        => (int) $item->order,
-            'achieve_date' => format_date( $item->achieve_date ),
-            'achieved_at'  => format_date( $item->updated_at ),
+            'achieve_date' => $item->achieve_date,
+            'achieved_at'  => $item->updated_at,
             'status'       => $item->status,
-            'created_at'   => format_date( $item->created_at ),
-            'meta'         => $this->meta( $item ),
+            'created_at'   => $item->created_at,
         ];
 
         
     }
 
-
-    public function meta( Milestone $item ) {
-        $meta = $item->metas()->get()->toArray();
-        $meta = wp_list_pluck( $meta, 'meta_value', 'meta_key' );
-        return array_merge( $meta, [
-            'total_task_list'        => $item->task_lists->count(),
-            'total_discussion_board' => $item->discussion_boards->count(),
-        ] );
-    }
 
     public function includeTaskLists( Milestone $item ) {
         $page = isset( $_GET['task_list_page'] ) ? intval( $_GET['task_list_page'] ) : 1;
