@@ -15,6 +15,7 @@
                 <VIcon>comment</VIcon>
             </VBtn>
         </VToolbar>
+        <DiscussionForm :discuss="discussion"/>
         <VCardText class="white">
             <div class="description text--primary">
                 {{ discussion.description }}
@@ -32,9 +33,11 @@
 
 <script>
 import Comments from '@ac/InProject/Comment/Comments.vue'
+import DiscussionForm from './DiscussionForm'
 export default {
     components: {
-        Comments
+        Comments,
+        DiscussionForm
     },
     props: {
         discussion: {

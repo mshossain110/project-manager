@@ -4,6 +4,7 @@ import Single from './List/Single.vue'
 import Discussions from './Discussion/Discussions.vue'
 import Activities from './Activity/Activities.vue'
 import Empty from './List.vue'
+import Milestone from './Milestone/Milestones.vue'
 
 const ProjectRoute = [
     {
@@ -34,7 +35,7 @@ const ProjectRoute = [
             },
             {
                 path: 'milestone',
-                component: Empty,
+                component: Milestone,
                 name: 'milestone-page'
             },
             {

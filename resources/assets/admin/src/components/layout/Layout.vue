@@ -15,7 +15,7 @@
 
         <VToolbar
             :clipped-left="$vuetify.breakpoint.lgAndUp"
-            color="white"
+            color="blue"
             flat
             light
             app
