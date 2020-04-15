@@ -7,15 +7,28 @@
             flat
         >
             <VToolbarTitle>{{ discussion.title }}</VToolbarTitle>
+
             <VSpacer />
+            <VBtn
+                icon
+                @click="showeditform = !showeditform"
+            >
+                <VIcon>edit</VIcon>
+            </VBtn>
             <VBtn
                 icon
                 @click="showcomments = !showcomments"
             >
                 <VIcon>comment</VIcon>
             </VBtn>
+             <VBtn
+                icon
+               @click="deleteDiscussion(discussion)"
+            >
+                <VIcon>delete</VIcon>
+            </VBtn>
         </VToolbar>
-        <DiscussionForm :discuss="discussion"/>
+        <DiscussionForm v-if="showeditform" :discuss="discussion"/>
         <VCardText class="white">
             <div class="description text--primary">
                 {{ discussion.description }}
@@ -47,12 +60,18 @@ export default {
     },
     data () {
         return {
-            showcomments: false
+            showcomments: false,
+            showeditform:false
         }
     },
     computed: {
         comments () {
             return this.discussion.comments ? this.discussion.comments.data : []
+        }
+    },
+    methods:{
+        deleteDiscussion(discussion){
+            this.$store.dispatch('Discussion/deleteDiscussion',discussion)
         }
     }
 }

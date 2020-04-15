@@ -12,7 +12,7 @@ class DiscussionBoardTransformer extends TransformerAbstract {
     use ResourceEditors;
 
     protected $defaultIncludes = [
-        
+        'creator', 'updater'
     ];
 
     protected $availableIncludes = [

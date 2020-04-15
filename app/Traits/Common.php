@@ -20,10 +20,10 @@ trait Common {
     }
 
     public function creator() {
-        return $this->belongsTo( 'WeDevs\PM\User\Models\User', 'created_by' );
+        return $this->belongsTo( 'App\User', 'created_by' );
     }
 
     public function updater() {
-        return $this->belongsTo( 'WeDevs\PM\User\Models\User', 'updated_by' );
+        return $this->belongsTo( 'App\User', 'updated_by' );
     }
 }

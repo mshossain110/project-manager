@@ -4,10 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Observers\MilestoneObserver;
+use App\Traits\Common;
 
 class Milestone extends Model {
 
-
+    use common;
     protected $table = 'boards';
 
     const OVERDUE    = 0;
@@ -112,9 +113,5 @@ class Milestone extends Model {
         return $this->belongsTo( 'App\Project', 'project_id' );
     }
 
-    public function users() {
-        return $this->belongsToMany( 'App\User',  'boardables', 'board_id', 'boardable_id')
-            ->where( 'board_type', 'milestone' )
-            ->where( 'boardable_type', 'user' );
-    }
+    
 }

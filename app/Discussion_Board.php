@@ -4,10 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Observers\DiscussionBoardObserver;
+use App\Traits\Common;
 
 class Discussion_Board extends Model
 {
-    
+    use common;
     protected $table = 'boards';
 
     protected $fillable = [
